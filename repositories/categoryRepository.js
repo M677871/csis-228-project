@@ -56,11 +56,20 @@ static async deleteCategory(categoryId) {
 }
 static async getCategoryCourses(categoryId) {
     try {
-        const query = `SELECT * FROM courses WHERE category_id = ?`;
-        const [rows] = await db.query(query, [categoryId]);
+        const query = `SELECT * FROM courses WHERE categorie_id = ?`;
+        const rows = await db.query(query, [categoryId]);
         return rows;
     } catch (error) {
         throw new Error("Error fetching category courses: " + error.message);
+    }
+}
+static async getCategoryInstructors(categoryId) {
+    try {
+        const query = `SELECT * FROM instructors WHERE instructor_id IN (SELECT instructor_id FROM courses WHERE categorie_id = ?)`; 
+        const rows = await db.query(query, [categoryId]);
+        return rows;
+    } catch (error) {
+        throw new Error("Error fetching category instructors: " + error.message);
     }
 }
 

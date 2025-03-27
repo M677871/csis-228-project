@@ -33,7 +33,7 @@ class CourseController {
         categorieId,
         courseName,
         description,
-        moment().format("YYYY-MM-DD")
+        moment().format("YYYY-MM-DD HH:mm:ss")
       );
       const result = await courseService.createCourse(course);
     return  res.status(201).json({message:`created course successuflly`, course:result});
@@ -53,7 +53,7 @@ class CourseController {
         categorieId,
         courseName,
         description,
-        moment().format("YYYY-MM-DD")
+        moment().format("YYYY-MM-DD HH:mm:ss")
       );
       const result = await courseService.updateCourse(updateCourse);
     return  res.status(200).json({message:`updated course successuflly`, course:result});

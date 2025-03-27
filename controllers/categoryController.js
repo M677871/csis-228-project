@@ -65,6 +65,26 @@ class CategoryController {
       return res.status(500).json({ message: error.message });
     }
   }
+  static async getCategoryCourses(req, res) {
+    try {
+      const { id } = req.params;
+      
+      const courses = await categoryService.getCategoryCourses(id);
+      return res.status(200).json(courses);
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
+static async getCategoryInstructors(req, res) {
+    try {
+      const { id } = req.params;
+      
+      const instructors = await categoryService.getCategoryInstructors(id);
+      return res.status(200).json(instructors);
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = CategoryController;
