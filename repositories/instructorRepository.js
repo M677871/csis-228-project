@@ -37,9 +37,10 @@ class InstructorRepository {
     try {
       const query = `SELECT * FROM courses 
                            WHERE instructor_id = ?`;
-      const [rows] = await db.query(query, [instructorId]);
+      const rows = await db.query(query, [instructorId]);
       return rows;
     } catch (error) {
+      console.log(error);
       throw new Error("Error fetching instructor courses: " + error.message);
     }
   }
@@ -116,6 +117,7 @@ class InstructorRepository {
       throw new Error("Error checking if instructor exists: " + error.message);
     }
   }
+ 
 }
 
 module.exports = InstructorRepository;

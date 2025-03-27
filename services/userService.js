@@ -4,6 +4,7 @@ const authToken = require('../utils/authToken');
 require('dotenv').config();
 
 class UserService {
+
   static async getAllUsers() {
     try {
       const users = await userRepository.getAllUsers();

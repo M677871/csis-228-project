@@ -91,6 +91,17 @@ class StudentRepository {
       throw new Error("Error checking if student exists: " + error.message);
     }
   }
+  static async getStudentCourses(studentId) {
+    try {
+      const query = `SELECT * FROM courses WHERE course_id IN
+                           (SELECT course_id FROM enrollments WHERE student_id = ?)`;
+       const result = await db.query(query, [studentId]);
+      return result;                    
+    } catch (error) {
+      console.error("Error in getStudentCourses:", error);
+      throw new Error("Error fetching student courses: " + error.message);
+    }
+  }
 }
 
 module.exports = StudentRepository;

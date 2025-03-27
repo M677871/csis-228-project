@@ -76,9 +76,14 @@ class InstructorService {
 
 static async getInstruvtorCourses(insId){
   try{
-return await InstructorRepository.getInstructorCourses(id);
+    if(! (await InstructorRepository.isInstructorExist(insId))){
+      throw new Error(`Instructor ID: ${insId} does not exist`);
+     
+    }
+
+   return await InstructorRepository.getInstructorCourses(insId);
   }catch(error){
-    throw new error ("error in getting the instructor courses "+error.message);
+    throw new Error ("error in getting the instructor courses :"+error.message);
   }
 }
 }

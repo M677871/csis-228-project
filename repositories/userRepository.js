@@ -143,6 +143,7 @@ class UserRepository {
       throw new Error("Error checking if user exists by ID: " + error.message);
     }
   } 
+ 
 }
 
 module.exports = UserRepository;
