@@ -1,5 +1,6 @@
 const db = require("../config/db");
 const Course = require("../models/courseModel");
+const Instructor = require("../models/instructorModel");
 const moment = require("moment");
 class CourseRepository {
   // Create a new course
@@ -51,7 +52,7 @@ class CourseRepository {
         course.categorieId,
         course.courseName,
         course.description,
-        moment().format("YYYY-MM-DD HH:mm:ss"),
+        course.createAt,
         course.courseId
       ]);
       return affectedRows;
@@ -68,6 +69,16 @@ class CourseRepository {
       return affectedRows > 0;
     } catch (error) {
       throw new Error("Error deleting course: " + error.message);
+    }
+  }
+  static async getInstructorByCourseId(courseId) {
+    try {
+      const query = `SELECT * FROM instructors
+                     WHERE instructor_id IN (SELECT instructor_id FROM courses WHERE course_id = ?)`;
+      const rows = await db.query(query, [courseId]);
+      return rows.map(Instructor.fromRow);
+    } catch (error) {
+      throw new Error("Error fetching instructor by course ID: " + error.message);
     }
   }
 

@@ -79,6 +79,17 @@ class CourseController {
     return  res.status(500).json({ message: error.message });
     }
   }
+  static async getInstructorByCourseId(req, res) {
+    try {
+      const { id } = req.params;
+      
+      const course = await courseService.getInstructorByCourseId(id);
+     
+      res.status(200).json({message:`the instructor of the course :`, course:course});
+    } catch (error) {
+     return res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = CourseController;

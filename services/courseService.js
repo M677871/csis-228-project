@@ -22,7 +22,18 @@ class CourseService {
       throw new Error('Error fetching course: ' + error.message);
     }
   }
-
+  static async getInstructorByCourseId(id) {
+    try {
+      
+      if (!(await courseRepository.courseExistsById(id))) {
+        throw new Error(`Course ID: ${id} does not exist`);
+      }
+      const courses = await courseRepository.getInstructorByCourseId(id);
+      return courses;
+    } catch (error) {
+      throw new Error('Error fetching course: ' + error.message);
+    }
+  }
   static async createCourse(course) {
     try {
       const newCourse = await courseRepository.createCourse(course);

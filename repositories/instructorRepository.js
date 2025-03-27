@@ -91,21 +91,12 @@ class InstructorRepository {
   static async getInstructorByUserId(userId) {
     try {
       const query = "SELECT * FROM instructors WHERE user_id = ?";
-      const [rows] = await db.query(query, [userId]);
+      const rows = await db.query(query, [userId]);
       return Instructor.fromRow(rows[0]);
     } catch (error) {
       throw new Error("Error fetching instructor by user ID: " + error.message);
     }
-  }
-  static async getInstructorByCourseId(courseId) {
-    try {
-      const query = `SELECT * FROM instructors
-                     WHERE instructor_id = (SELECT instructor_id FROM courses WHERE course_id = ?)`;
-      const [rows] = await db.query(query, [courseId]);
-      return Instructor.fromRow(rows[0]);
-    } catch (error) {
-      throw new Error("Error fetching instructor by course ID: " + error.message);
-    }
+  
   }
 
   static async isInstructorExist(instructorId) {
