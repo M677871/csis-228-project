@@ -13,7 +13,7 @@ class UserRepository {
         user.email,
         hashedPassword,
         user.userType,
-        moment().format("YYYY-MM-DD HH:mm:ss")
+        user.createdAt
       ]);
       return affectedRows;
     } catch (error) {
@@ -56,7 +56,7 @@ class UserRepository {
         user.email,
         hashedPassword,
         user.userType,
-        moment().format("YYYY-MM-DD HH:mm:ss"),
+        user.createdAt,
         user.userId
       ]);
       return affectedRows;

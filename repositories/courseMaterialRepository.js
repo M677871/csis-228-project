@@ -28,7 +28,7 @@ class CourseMaterialRepository {
         courseMaterial.title,
         courseMaterial.materialType,
         courseMaterial.filePath,
-        moment().format("YYYY-MM-DD HH:mm:ss"),
+        courseMaterial.createAt,
         courseMaterial.materialId
       ]);
         return affectedRows;

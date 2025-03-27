@@ -10,7 +10,7 @@ class EnrollementRepository {
         enrollement.studentId,
         enrollement.courseId,
         enrollement.status,
-        moment().format("YYYY-MM-DD HH:mm:ss")
+        enrollement.enrolledAt
       ]);
 
       return affectedRows;
@@ -69,7 +69,7 @@ class EnrollementRepository {
       const { affectedRows } = await db.query(query, [
         enrollement.courseId,
         enrollement.status,
-        moment().format("YYYY-MM-DD HH:mm:ss"),
+        enrollement.enrolledAt,
         enrollement.enrollementId
       ]);
       return affectedRows;
