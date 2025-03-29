@@ -82,11 +82,13 @@ class UserService {
 
 
   static async login(email, password) {
+    try{
+      if (!(await userRepository.isEmailExist(email))) {
+        throw new Error(`User email: ${email} does not exist`);
+      }
     const user = await userRepository.getUserByEmail(email);
 
-    if (!user) {
-      throw new Error(`user with email ${email} not found`);
-    }
+    
 
     const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordValid) {
@@ -104,9 +106,12 @@ class UserService {
       token: token,
       user: { email: user.email, userType: user.userType },
     };
+  }catch(error) {
+    console.error("Error during login:", error);
+    throw new Error("Error during login: " + error.message);
   }
 
-  
+}
 
   static async changePassword(email, currentPassword, newPassword) {
     try {
