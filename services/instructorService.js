@@ -7,9 +7,16 @@ class InstructorService {
       if(! (await userRepository.userExistsById(instructor.userId))){
         throw new Error(`User ID: ${instructor.userId} does not exist`);
       }
+      if (await InstructorRepository.getInstructorByUserId(instructor.userId)) {
+        throw new Error(`Instructor with user ID: ${instructor.userId} already exists`);
+      }
+    
       const user = await userRepository.getUserById(instructor.userId);
       if(user.userType !== 'instructor'){
         throw new Error('User is not an instructor');
+      }
+      if (await InstructorRepository.isInstructorExist(instructor.userId)) {
+        throw new Error(`Instructor with user ID: ${instructor.userId} already exists`);
       }
       return await InstructorRepository.createInstructor(instructor);
     } catch (error) {
@@ -46,19 +53,27 @@ class InstructorService {
 
   static async updateInstructor(instructor) {
     try {
-      
-      const exists = await InstructorRepository.isInstructorExist(
-        instructor.instructorId
-      );
-      if (!exists) {
-        throw new Error(`Instructor ID: ${instructor.instructorId} does not exist`);
-      }
+        const exists = await InstructorRepository.isInstructorExist(instructor.instructorId);
+        if (!exists) {
+            throw new Error(`Instructor ID: ${instructor.instructorId} does not exist`);
+        }
 
-      return await InstructorRepository.updateInstructor(instructor);
+        let instructorData = await InstructorRepository.getInstructorById(instructor.instructorId);
+        let user = await userRepository.getUserById(instructor.userId);
+        if(user.userType !== 'instructor'){
+          throw new Error('User is not an instructor');
+        }
+        if (instructorData.userId !== instructor.userId) {
+            if (await InstructorRepository.isInstructorExistByUserId(instructor.userId)) {
+                throw new Error(`Instructor with user ID: ${instructor.userId} already exists`);
+            }
+        }
+        return await InstructorRepository.updateInstructor(instructor);
     } catch (error) {
-      throw new Error("Error updating instructor: " + error.message);
+        throw new Error("Error updating instructor: " + error.message);
     }
-  }
+}
+
 
   static async deleteInstructor(instructorId) {
     try {

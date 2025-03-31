@@ -108,6 +108,15 @@ class InstructorRepository {
       throw new Error("Error checking if instructor exists: " + error.message);
     }
   }
+  static async isInstructorExistByUserId(userId) {
+    try {
+      const query = "SELECT * FROM instructors WHERE user_id = ?";
+      const rows = await db.query(query, [userId]);
+      return rows.length > 0 ? true : false;
+    } catch (error) {
+      throw new Error("Error checking if instructor exists: " + error.message);
+    }
+  }
  
 }
 
