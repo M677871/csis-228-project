@@ -74,13 +74,11 @@ class UserController {
         try {
             const { email } = req.body;
             const user = await userServices.getUserByEmail(email);
-            if (!user) {
-                return res.status(404).json({ message: 'user not found' });
-            }
+            
             return res.status(200).json(user);
         }
         catch (error) {
-            console.error("error.message");
+            console.log(error);
             return res.status(500).json({ message: error.message });
         }
     }
@@ -98,9 +96,10 @@ class UserController {
             const { id } = req.params;
            
             const user = await userServices.getUserById(id);
+            /*
             if (!user) {
                 return res.status(404).json({ message: 'user not found' });
-            }
+            }*/
             return res.status(200).json(user);
         }
         catch (error) {
@@ -113,10 +112,12 @@ class UserController {
             const { id } = req.params;
            
             const user = await userServices.deleteUser(id);
+            /*
             if (!user) {
                 return res.status(404).json({ message: 'user not found' });
-            }
-            return res.status(200).json(user);
+            }*/
+            return res.status(200).json({ message: 'user deleted successfully' });
+      
         }
         catch (error) {
             return res.status(500).json({ message: error.message });
