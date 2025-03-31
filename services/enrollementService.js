@@ -48,7 +48,10 @@ class enrollementService{
             if(!(await enrollementRepository.isEnrollementExists(enrollementData.enrollementId))){
                 throw new Error(`Enrollement ID: ${enrollementData.enrollementId} does not exist`);
             }
-            if((await enrollementRepository.getEnrollmentByStudentAndCourse(enrollementData.studentId, enrollementData.courseId))){
+            let enrollement = await enrollementRepository.getEnrollementById(enrollementData.enrollementId);
+
+            if((enrollement.studentId !== enrollementData.studentId || enrollement.courseId !== enrollementData.courseId) &&
+             (await enrollementRepository.getEnrollmentByStudentAndCourse(enrollementData.studentId, enrollementData.courseId))){
                 throw new Error(`Enrollement with student ID: ${enrollementData.studentId} and course ID: ${enrollementData.courseId} already exists`);
             }
             
