@@ -26,6 +26,9 @@ class StudentService {
 
   static async createStudent(student) {
     try {
+      if(! await studentRepository.getStudentByUserId(student.studentId)){
+        throw new Error(`student by userId: ${student.userId} already exist`);
+      }
       if(! (await User.userExistsById(student.userId))) {
         throw new Error(`User ID: ${student.userId} does not exist`);
       }
@@ -48,6 +51,22 @@ class StudentService {
       if (!studentExists) {
         return res.status(404).json({ message: `Student ID: ${studentData.studentId} does not exist` });
       }
+      if(!await User.userExistsById(studentData.userId)){
+        throw new Error(`User ID: ${studentData.userId} does not exist`);
+      }
+      let instructorData = await studentRepository.getStudentById(studentData.studentId);
+      
+      let userData = await User.getUserById(instructorData.userId);
+
+      if(userData.userType !== 'student'){
+        throw new Error('User is not a student');
+      }
+      if (studentData.userId !== instructorData.userId) {
+        if (await studentRepository.isStudentExistByUserId(studentData.userId)) {
+          throw new Error(`User ID: ${studentData.userId} already exists`);
+        }
+      }
+
       const updatedStudent = await studentRepository.updateStudent( studentData);
       return updatedStudent;
     } catch (error) {

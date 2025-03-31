@@ -57,6 +57,9 @@ class InstructorService {
         if (!exists) {
             throw new Error(`Instructor ID: ${instructor.instructorId} does not exist`);
         }
+        if(! (await userRepository.userExistsById(instructor.userId))){
+          throw new Error(`User ID: ${instructor.userId} does not exist`);
+        }
 
         let instructorData = await InstructorRepository.getInstructorById(instructor.instructorId);
         let user = await userRepository.getUserById(instructor.userId);

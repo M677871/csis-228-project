@@ -10,7 +10,7 @@ class StudentRepository {
                            VALUES (?, ?, ?, ?, ?)`;
       const { affectedRows } = await db.query(query, [
         student.userId,
-        student.stuFNname ,
+        student.stuFName ,
         student.stuLName,
         moment(student.dob).format("YYYY-MM-DD"),
         student.profilePicture
@@ -55,7 +55,7 @@ class StudentRepository {
                            WHERE studend_id = ?`;
       const { affectedRows } = await db.query(query, [
         student.userId,
-        student.stuFNname,
+        student.stuFName,
         student.stuLName,
         student.dob,
         student.profilePicture,
@@ -100,6 +100,26 @@ class StudentRepository {
     } catch (error) {
       console.error("Error in getStudentCourses:", error);
       throw new Error("Error fetching student courses: " + error.message);
+    }
+  }
+  static async getStudentByUserId(userId) {
+    try {
+      const query = "SELECT * FROM students WHERE user_id = ?";
+      const rows = await db.query(query, [userId]);
+      return rows.length === 0 ? null : Student.fromRow(rows[0]);
+    } catch (error) {
+      console.error("Error in getStudentByUserId:", error);
+      throw new Error("Error fetching student by user ID: " + error.message);
+    }
+  }
+  static async isStudentExistByUserId(userId) {
+    try {
+      const query = "SELECT * FROM students WHERE user_id = ?";
+      const rows = await db.query(query, [userId]);
+      return rows.length > 0 ? true : false;
+    } catch (error) {
+      console.error("Error in isStudentExistByUserId:", error);
+      throw new Error("Error checking if student exists by user ID: " + error.message);
     }
   }
 }
