@@ -12,16 +12,22 @@ Ensure you have the following installed:
 ## 📂 Project Structure
 ```
 /project-root
-│── src
-│   ├── config          # Configuration files (DB, dotenv, etc.)
-│   ├── controllers     # Business logic for API endpoints
-│   ├── models          # Database models and schema
-│   ├── routes          # Express routes
-│   ├── middleware      # Authentication, validation, etc.
-│   ├── utils           # Utility functions
-│── .env                # Environment variables
-│── package.json        # Dependencies and scripts
-│── server.js           # Entry point of the application
+│── /config          # Configuration files
+│── /models          # ORM/ODM models
+│── /repositories    # Database access layer
+│── /services        # Business logic
+│── /controllers     # Request handlers
+│── /middlewares     # Custom middlewares (e.g., auth, error handling)
+│── /validators      # Request validation logic
+│── /routes          # API route definitions
+│── /utils           # Helper functions
+│── .env             # Environment variables
+│── .gitignore       # Git ignored files
+│── csis228.sql      # Database schema
+│── index.js         # Application entry point
+│── package.json     # Node.js dependencies
+│── README.md        # Documentation
+
 ```
 
 ## 🚀 Installation & Setup

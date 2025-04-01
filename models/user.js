@@ -23,7 +23,7 @@ password_hash:{
     allowNull:false
 },
 user_type:{
-    type:DataTypes.ENUM('instructor','user'),
+    type:DataTypes.ENUM('instructor','user','admin'),
     allowNull:false
 },
 create_at:{
