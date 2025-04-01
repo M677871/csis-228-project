@@ -12,21 +12,21 @@ Ensure you have the following installed:
 ## 📂 Project Structure
 ```
 /project-root
-│── /config          # Configuration files
-│── /models          # ORM/ODM models
-│── /repositories    # Database access layer
-│── /services        # Business logic
-│── /controllers     # Request handlers
-│── /middlewares     # Custom middlewares (e.g., auth, error handling)
-│── /validators      # Request validation logic
-│── /routes          # API route definitions
-│── /utils           # Helper functions
-│── .env             # Environment variables
-│── .gitignore       # Git ignored files
-│── csis228.sql      # Database schema
-│── index.js         # Application entry point
-│── package.json     # Node.js dependencies
-│── README.md        # Documentation
+│── /config                 # Configuration files
+│── /models                 # ORM/ODM models
+│── /repositories           # Database access layer
+│── /services               # Business logic
+│── /controllers            # Request handlers
+│── /middlewares            # Custom middlewares (e.g., auth, error handling)
+│── /validators             # Request validation logic
+│── /routes                 # API route definitions
+│── /utils                  # Helper functions
+│── .env                    # Environment variables
+│── .gitignore              # Git ignored files
+│── csis-228-project.sql    # Database schema
+│── index.js                # Application entry point
+│── package.json            # Node.js dependencies
+│── README.md               # Documentation
 
 ```
 
