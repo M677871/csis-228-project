@@ -3,6 +3,15 @@ const moment = require("moment");
 const Quiz = require("../models/quizModel");
 
 class QuizRepository {
+
+   /**
+   * createQuiz: Adds a new quiz to the database.
+   * @param {Object} quiz - The quiz details.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - Throws an error if there is a database issue.
+   */
+
+
   static async createQuiz(quiz) {
     try {
       const query = `INSERT INTO quizzes (course_id, quiz_name, quiz_description, created_at) VALUES (?, ?, ?, ?)`;
@@ -19,6 +28,13 @@ class QuizRepository {
     }
   }
 
+  /**
+   * getQuizById: Retrieves a quiz by its ID.
+   * @param {number} quizId - The ID of the quiz.
+   * @returns {Quiz} - A Quiz object.
+   * @throws {Error} - Throws an error if there is a database issue.
+   */
+
   static async getQuizById(quizId) {
     try {
       const query = "SELECT * FROM quizzes WHERE quiz_id = ?";
@@ -28,6 +44,12 @@ class QuizRepository {
       throw new Error("Error fetching quiz: " + error.message);
     }
   }
+
+  /**
+   * getAllQuizzes: Retrieves all quizzes from the database.
+   * @returns {Quiz[]} - An array of Quiz objects.
+   * @throws {Error} - Throws an error if there is a database issue.
+   */
 
   static async getAllQuizzes() {
     try {
@@ -39,6 +61,13 @@ class QuizRepository {
     }
   }
 
+  /**
+   * getQuizzesByCourseId: Retrieves quizzes by course ID.
+   * @param {number} courseId - The ID of the course.
+   * @returns {Quiz[]} - An array of Quiz objects.
+   * @throws {Error} - Throws an error if there is a database issue.
+   */
+
   static async getQuizzesByCourseId(courseId) {
     try {
       const query = "SELECT * FROM quizzes WHERE course_id = ?";
@@ -48,6 +77,13 @@ class QuizRepository {
       throw new Error("Error fetching quizzes by course ID: " + error.message);
     }
   }
+
+  /**
+   * updateQuiz: Updates an existing quiz.
+   * @param {Object} quiz - The quiz details.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - Throws an error if there is a database issue.
+   */
 
   static async updateQuiz(quiz) {
     try {
@@ -66,6 +102,13 @@ class QuizRepository {
     }
   }
 
+  /**
+   * deleteQuiz: Deletes a quiz by its ID.
+   * @param {number} quizId - The ID of the quiz to delete.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - Throws an error if there is a database issue.
+   */
+
   static async deleteQuiz(quizId) {
     try {
       const query = `DELETE FROM quizzes WHERE quiz_id = ?`;
@@ -75,6 +118,14 @@ class QuizRepository {
       throw new Error("Error deleting quiz: " + error.message);
     }
   }
+
+  /**
+   * quizExists: Checks if a quiz exists by its ID.
+   * @param {number} quizId - The ID of the quiz to check.
+   * @returns {boolean} - True if the quiz exists, false otherwise.
+   * @throws {Error} - Throws an error if there is a database issue.
+   */
+
   static async quizExists(quizId) {
     try {
       const query = `SELECT * FROM quizzes WHERE quiz_id = ?`;

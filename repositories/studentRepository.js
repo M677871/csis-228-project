@@ -3,7 +3,14 @@ const moment = require("moment");
 const Student = require("../models/studentModel");
 
 class StudentRepository {
-  // Create a new student
+  
+    /**
+   * Create a new student.
+   * @param {Object} student - The student data.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - If the operation fails.
+   */
+
   static async createStudent(student) {
     try {
       const query = `INSERT INTO students (user_id, stu_FName, stu_LName, dob, profile_picture) 
@@ -23,7 +30,13 @@ class StudentRepository {
     }
   }
 
-  // Get student by ID
+  /**
+   * Get a student by their student ID.
+   * @param {number} studentId - The ID of the student.
+   * @returns {Object|null} - The student object or null if not found.
+   * @throws {Error} - If the operation fails.
+   */
+  
   static async getStudentById(studentId) {
     try {
       const query = "SELECT * FROM students WHERE studend_id = ?";
@@ -35,7 +48,12 @@ class StudentRepository {
     }
   }
 
-  // Get all students
+   /**
+   * Get all students.
+   * @returns {Array} - An array of all student objects.
+   * @throws {Error} - If the operation fails.
+   */
+  
   static async getAllStudents() {
     try {
       const query = "SELECT * FROM students";
@@ -47,7 +65,13 @@ class StudentRepository {
     }
   }
 
-  // Update student information
+   /**
+   * Update a student's information.
+   * @param {Object} student - The student data to update.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - If the operation fails.
+   */
+  
   static async updateStudent(student) {
     try {
      // console.log(student);
@@ -69,7 +93,13 @@ class StudentRepository {
     }
   }
 
-  // Delete a student
+   /**
+   * Delete a student by their student ID.
+   * @param {number} studentId - The ID of the student to delete.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - If the operation fails.
+   */
+  
   static async deleteStudent(studentId) {
     try {
       const query = "DELETE FROM students WHERE studend_id = ?";
@@ -80,6 +110,14 @@ class StudentRepository {
       throw new Error("Error deleting student: " + error.message);
     }
   }
+
+    /**
+   * Check if a student exists by student ID.
+   * @param {number} studentId - The student ID to check.
+   * @returns {boolean} - Returns true if the student exists, false otherwise.
+   * @throws {Error} - If the operation fails.
+   */
+
   static async studentExists(studentId) {
     try {
       const query = "SELECT * FROM students WHERE studend_id =?"; 
@@ -91,6 +129,14 @@ class StudentRepository {
       throw new Error("Error checking if student exists: " + error.message);
     }
   }
+
+  /**
+   * Get courses a student is enrolled in.
+   * @param {number} studentId - The ID of the student.
+   * @returns {Array} - A list of courses the student is enrolled in.
+   * @throws {Error} - If the operation fails.
+   */
+
   static async getStudentCourses(studentId) {
     try {
       const query = `SELECT * FROM courses WHERE course_id IN
@@ -102,6 +148,14 @@ class StudentRepository {
       throw new Error("Error fetching student courses: " + error.message);
     }
   }
+
+  /**
+   * Get a student by their user ID.
+   * @param {number} userId - The ID of the user.
+   * @returns {Object|null} - The student object or null if not found.
+   * @throws {Error} - If the operation fails.
+   */
+
   static async getStudentByUserId(userId) {
     try {
       const query = "SELECT * FROM students WHERE user_id = ?";
@@ -112,6 +166,14 @@ class StudentRepository {
       throw new Error("Error fetching student by user ID: " + error.message);
     }
   }
+
+  /**
+   * Check if a student exists by their user ID.
+   * @param {number} userId - The user ID to check.
+   * @returns {boolean} - Returns true if the student exists, false otherwise.
+   * @throws {Error} - If the operation fails.
+   */
+
   static async isStudentExistByUserId(userId) {
     try {
       const query = "SELECT * FROM students WHERE user_id = ?";

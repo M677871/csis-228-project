@@ -2,7 +2,16 @@ const db = require("../config/db");
 const QuizQuestion = require("../models/quizQuestionModel");
 const moment = require("moment");
 class QuizQuestionRepository {
+
+    /**
+     * createQuizQuestion: Adds a new quiz question to the database.
+     * @param {Object} quizQuestion - The quiz question details.
+     * @returns {number} - The number of affected rows.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+
     static async createQuizQuestion(quizQuestion) {
+
         try {
             
             const query = `INSERT INTO quiz_questions ( quiz_id, question_text, created_at) VALUES (?, ?, ?)`;
@@ -18,6 +27,13 @@ class QuizQuestionRepository {
         }
     }
 
+   /**
+     * getQuizQuestionById: Retrieves a quiz question by its ID.
+     * @param {number} questionId - The ID of the quiz question.
+     * @returns {QuizQuestion} - A QuizQuestion object.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+
     static async getQuizQuestionById(questionId) {
         try {
             const query = "SELECT * FROM quiz_questions WHERE question_id = ?";
@@ -28,6 +44,12 @@ class QuizQuestionRepository {
         }
     }
 
+    /**
+     * getAllQuizQuestions: Retrieves all quiz questions from the database.
+     * @returns {QuizQuestion[]} - An array of QuizQuestion objects.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+
     static async getAllQuizQuestions() {
         try {
             const query = "SELECT * FROM quiz_questions";
@@ -37,6 +59,13 @@ class QuizQuestionRepository {
             throw new Error("Error fetching all quiz questions: " + error.message);
         }
     }
+
+    /**
+     * updateQuizQuestion: Updates an existing quiz question.
+     * @param {Object} quizQuestion - The quiz question details.
+     * @returns {number} - The number of affected rows.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
 
     static async updateQuizQuestion(quizQuestion) {
         try {
@@ -54,6 +83,14 @@ class QuizQuestionRepository {
             throw new Error("Error updating quiz question: " + error.message);
         }
     }
+
+    /**
+     * deleteQuizQuestionByQuizId: Deletes all quiz questions associated with a quiz.
+     * @param {number} quizId - The ID of the quiz.
+     * @returns {number} - The number of affected rows.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+
     static async deleteQuizQuestionByQuizId(quizId) {
         try {
             const query = `DELETE FROM quiz_questions WHERE quiz_id = ?`;
@@ -63,6 +100,14 @@ class QuizQuestionRepository {
             throw new Error("Error deleting quiz question: " + error.message);
         }
     }
+
+    /**
+     * deleteQuizQuestion: Deletes a specific quiz question by its ID.
+     * @param {number} questionId - The ID of the quiz question to delete.
+     * @returns {number} - The number of affected rows.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+
     static async deleteQuizQuestion(questionId) {
         try {
             const query = `DELETE FROM quiz_questions WHERE question_id = ?`;
@@ -72,6 +117,14 @@ class QuizQuestionRepository {
             throw new Error("Error deleting quiz question: " + error.message);
         }
     }
+
+    /**
+     * quizQuestionExists: Checks if a quiz question exists by its ID.
+     * @param {number} questionId - The ID of the quiz question to check.
+     * @returns {boolean} - True if the quiz question exists, false otherwise.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+
     static async quizQuestionExists(questionId) {
         try {
             const query = "SELECT * FROM quiz_questions WHERE question_id = ?";

@@ -2,6 +2,13 @@ const db = require("../config/db");
 const Category = require("../models/categoryModel");
 
 class CategoryRepository {
+    
+    /**
+     * Creates a new category in the database.
+     * @param {Object} category The category to be created.
+     * @returns {number} The number of affected rows.
+     * @throws {Error} If an error occurs during the creation process.
+     */
     static async createCategory(category) {
         try {
             const query = `INSERT INTO categories (category_name , description) VALUES (?,?)`;
@@ -14,6 +21,12 @@ class CategoryRepository {
             throw new Error("Error creating category: " + error.message);
         }
 }
+/**
+     * Retrieves a category by its ID.
+     * @param {number} categoryId The ID of the category to retrieve.
+     * @returns {Category} The category object.
+     * @throws {Error} If an error occurs during the fetch operation.
+     */
 static async getCategoryById(categoryId) {
     try {
         const query = "SELECT * FROM categories WHERE category_id = ?";
@@ -23,6 +36,11 @@ static async getCategoryById(categoryId) {
         throw new Error("Error fetching category: " + error.message);
     }
 }
+  /**
+     * Retrieves all categories from the database.
+     * @returns {Array<Category>} An array of category objects.
+     * @throws {Error} If an error occurs during the fetch operation.
+     */
 static async getAllCategories() {
     try {
         const query = "SELECT * FROM categories";
@@ -32,6 +50,13 @@ static async getAllCategories() {
         throw new Error("Error fetching all categories: " + error.message);
     }
 }
+
+    /**
+     * Updates an existing category in the database.
+     * @param {Object} category The updated category data.
+     * @returns {number} The number of affected rows.
+     * @throws {Error} If an error occurs during the update operation.
+     */
 static async updateCategory(category) {
     try {
         const query = `UPDATE categories SET category_name=?,description=? WHERE category_id = ?`;
@@ -45,6 +70,12 @@ static async updateCategory(category) {
         throw new Error("Error updating category: " + error.message);
     }
 }
+  /**
+     * Deletes a category from the database.
+     * @param {number} categoryId The ID of the category to delete.
+     * @returns {number} The number of affected rows.
+     * @throws {Error} If an error occurs during the delete operation.
+     */
 static async deleteCategory(categoryId) {
     try {
         const query = `DELETE FROM categories WHERE category_id = ?`;
@@ -54,6 +85,12 @@ static async deleteCategory(categoryId) {
         throw new Error("Error deleting category: " + error.message);
     }
 }
+/**
+     * Retrieves all courses belonging to a category.
+     * @param {number} categoryId The ID of the category.
+     * @returns {Array<Object>} An array of course objects.
+     * @throws {Error} If an error occurs during the fetch operation.
+     */
 static async getCategoryCourses(categoryId) {
     try {
         const query = `SELECT * FROM courses WHERE categorie_id = ?`;
@@ -63,6 +100,12 @@ static async getCategoryCourses(categoryId) {
         throw new Error("Error fetching category courses: " + error.message);
     }
 }
+ /**
+     * Retrieves all instructors that teach courses in a specific category.
+     * @param {number} categoryId The ID of the category.
+     * @returns {Array<Object>} An array of instructor objects.
+     * @throws {Error} If an error occurs during the fetch operation.
+     */
 static async getCategoryInstructors(categoryId) {
     try {
         const query = `SELECT * FROM instructors WHERE instructor_id IN (SELECT instructor_id FROM courses WHERE categorie_id = ?)`; 
@@ -72,7 +115,12 @@ static async getCategoryInstructors(categoryId) {
         throw new Error("Error fetching category instructors: " + error.message);
     }
 }
-
+ /**
+     * Checks if a category exists by its ID.
+     * @param {number} categoryId The ID of the category to check.
+     * @returns {boolean} True if the category exists, false otherwise.
+     * @throws {Error} If an error occurs during the check operation.
+     */
 static async isCategoryExists(categoryId) {
     try {
         const query = `SELECT * FROM categories WHERE category_id = ?`;

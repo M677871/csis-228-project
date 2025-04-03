@@ -8,11 +8,6 @@ class CourseRepository {
    * Create a new course.
    * 
    * @param {Object} course - The course object containing course details.
-   * @param {number} course.instructorId - The ID of the instructor for the course.
-   * @param {number} course.categorieId - The category ID of the course.
-   * @param {string} course.courseName - The name of the course.
-   * @param {string} course.description - The description of the course.
-   * @param {string} course.createAt - The creation date of the course.
    * @returns {number} - The number of affected rows, indicating the success of the operation.
    * @throws {Error} - Throws an error if the course creation fails.
    */
@@ -70,12 +65,6 @@ class CourseRepository {
    * Update the information of a course.
    * 
    * @param {Object} course - The course object containing the updated course details.
-   * @param {number} course.instructorId - The ID of the instructor for the course.
-   * @param {number} course.categorieId - The category ID of the course.
-   * @param {string} course.courseName - The name of the course.
-   * @param {string} course.description - The description of the course.
-   * @param {string} course.createAt - The creation date of the course.
-   * @param {number} course.courseId - The ID of the course to update.
    * @returns {number} - The number of affected rows, indicating the success of the operation.
    * @throws {Error} - Throws an error if updating the course fails.
    */

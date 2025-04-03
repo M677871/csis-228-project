@@ -1,7 +1,7 @@
 # CSIS-228 Project Node.js with Database Project
 
-## 📌 Overview
-This project is a **Node.js** application that integrates with a database. It demonstrates key concepts in backend development, including RESTful API design, database management, and authentication.
+## 📌 Online Learning Platform Overview
+This project is a **Node.js** application designed for an Online Learning Platform. It integrates with a relational database to provide various features for managing courses, instructors, students, quiz answers, enrollments, and course materials. The system allows instructors to create and manage courses and materials, while students can enroll in courses, take quizzes, and access learning resources.
 
 ## 🛠 Prerequisites
 Ensure you have the following installed:

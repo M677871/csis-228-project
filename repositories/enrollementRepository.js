@@ -3,6 +3,14 @@ const moment = require("moment");
 const Enrollment = require("../models/enrollementModel");
 
 class EnrollementRepository {
+
+  /**
+   * createEnrollement: Creates a new enrollment record in the database.
+   * @param {Object} enrollement - The enrollment details.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - Throws an error if the database query fails.
+   */
+
   static async createEnrollement(enrollement) {
     try {
       const query = `INSERT INTO enrollments (student_id,course_id, status,enrolled_at) VALUES (?, ?, ?,?)`;
@@ -19,6 +27,13 @@ class EnrollementRepository {
     }
   }
 
+  /**
+   * getEnrollementById: Retrieves an enrollment by its ID.
+   * @param {number} enrollementId - The ID of the enrollment.
+   * @returns {Enrollment} - An Enrollment object.
+   * @throws {Error} - Throws an error if the database query fails.
+   */
+
   static async getEnrollementById(enrollementId) {
     try {
       const query = "SELECT * FROM enrollments WHERE enrollment_id = ?";
@@ -28,6 +43,13 @@ class EnrollementRepository {
       throw new Error("Error fetching enrollement: " + error.message);
     }
   }
+
+  /**
+   * getAllEnrollements: Retrieves all enrollments from the database.
+   * @returns {Array} - An array of Enrollment objects.
+   * @throws {Error} - Throws an error if the database query fails.
+   */
+
   static async getAllEnrollements() {
     try {
       const query = "SELECT * FROM enrollments";
@@ -37,6 +59,13 @@ class EnrollementRepository {
       throw new Error("Error fetching all enrollements: " + error.message);
     }
   }
+
+  /**
+   * getEnrollementsByStudentId: Retrieves all enrollments for a given student.
+   * @param {number} studentId - The ID of the student.
+   * @returns {Array} - An array of Enrollment objects.
+   * @throws {Error} - Throws an error if the database query fails.
+   */
 
   static async getEnrollementsByStudentId(studentId) {
     try {
@@ -50,6 +79,13 @@ class EnrollementRepository {
     }
   }
 
+  /**
+   * getEnrollementsByCourseId: Retrieves all enrollments for a given course.
+   * @param {number} courseId - The ID of the course.
+   * @returns {Array} - An array of Enrollment objects.
+   * @throws {Error} - Throws an error if the database query fails.
+   */
+
   static async getEnrollementsByCourseId(courseId) {
     try {
       const query = "SELECT * FROM enrollments WHERE course_id = ?";
@@ -61,6 +97,13 @@ class EnrollementRepository {
       );
     }
   }
+
+  /**
+   * updateEnrollement: Updates the details of an existing enrollment.
+   * @param {Object} enrollement - The updated enrollment details.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - Throws an error if the database query fails.
+   */
 
   static async updateEnrollement(enrollement) {
     try {
@@ -78,6 +121,13 @@ class EnrollementRepository {
     }
   }
 
+  /**
+   * deleteEnrollement: Deletes an enrollment from the database.
+   * @param {number} enrollementId - The ID of the enrollment to delete.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - Throws an error if the database query fails.
+   */
+
   static async deleteEnrollement(enrollementId) {
     try {
       const query = `DELETE FROM enrollments WHERE enrollment_id = ?`;
@@ -87,6 +137,14 @@ class EnrollementRepository {
       throw new Error("Error deleting enrollement: " + error.message);
     }
   }
+
+  /**
+   * isEnrollementExists: Checks if an enrollment exists by its ID.
+   * @param {number} enrollementId - The ID of the enrollment.
+   * @returns {boolean} - Returns true if the enrollment exists, false otherwise.
+   * @throws {Error} - Throws an error if the database query fails.
+   */
+
   static async isEnrollementExists(enrollementId) {
     try {
       const query = "SELECT * FROM enrollments WHERE enrollment_id = ?";
@@ -96,6 +154,15 @@ class EnrollementRepository {
       throw new Error("Error fetching enrollement: " + error.message);
     }
   }
+
+  /**
+   * getEnrollmentByStudentAndCourse: Checks if a student is enrolled in a specific course.
+   * @param {number} studentId - The ID of the student.
+   * @param {number} courseId - The ID of the course.
+   * @returns {boolean} - Returns true if the student is enrolled in the course, false otherwise.
+   * @throws {Error} - Throws an error if the database query fails.
+   */
+
   static async getEnrollmentByStudentAndCourse (studentId, courseId) {
     try{
     const query = 'SELECT * FROM enrollments WHERE student_id = ? AND course_id = ?';

@@ -4,7 +4,16 @@ const moment = require("moment");
 const User = require("../models/userModel");
 
 class UserRepository {
-  // Create a new user
+  
+  /**
+   * Create a new user.
+   * 
+   * @param {Object} user - The user data.
+   * @returns {number} - The number of affected rows (should be 1 if successful).
+   * @throws {Error} - Throws an error if the operation fails.
+   */
+
+
   static async createUser(user) {
     try {
       const query = `INSERT INTO users (email, password_hash, user_type, create_at) VALUES (?, ?, ?, ?)`;
@@ -21,7 +30,16 @@ class UserRepository {
     }
   }
 
-  // Get user by ID
+  /**
+   * Get a user by ID.
+   * 
+   * @param {number} userId - The ID of the user.
+   * @returns {User} - The user object.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
+  
+
+
   static async getUserById(userId) {
     try {
       const query = "SELECT * FROM users WHERE user_id = ?";
@@ -32,7 +50,15 @@ class UserRepository {
     }
   }
 
-  // Get user by email (for login)
+  /**
+   * Get a user by email.
+   * 
+   * @param {string} email - The email address of the user.
+   * @returns {User} - The user object.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
+  
+
   static async getUserByEmail(email) {
     try {
 
@@ -46,7 +72,13 @@ class UserRepository {
     }
   }
 
-
+  /**
+   * Update an existing user.
+   * 
+   * @param {Object} user - The user data.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
 
   static async updateUser(user) {
     try {
@@ -65,7 +97,15 @@ class UserRepository {
     }
   }
 
-  // Delete a user
+  /**
+   * Delete a user.
+   * 
+   * @param {number} userId - The ID of the user to delete.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
+
+
   static async deleteUser(userId) {
     try {
       const query = "DELETE FROM users WHERE user_id = ?";
@@ -76,7 +116,15 @@ class UserRepository {
     }
   }
 
-  // Check if email exists
+  /**
+   * Check if the provided email exists in the database.
+   * 
+   * @param {string} email - The email address to check.
+   * @returns {boolean} - Returns true if the email exists, false otherwise.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
+
+
   static async isEmailExist(email) {
     try {
       const query = "SELECT * FROM users WHERE email = ?";
@@ -87,7 +135,16 @@ class UserRepository {
     }
   }
 
-  // Get users by type
+  
+  /**
+   * Get users filtered by their type (e.g., 'admin', 'user').
+   * 
+   * @param {string} userType - The type of user to filter by.
+   * @returns {User[]} - An array of user objects.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
+
+
   static async getUsersByType(userType) {
     try {
       const query = "SELECT * FROM users WHERE user_type = ?";
@@ -98,7 +155,15 @@ class UserRepository {
     }
   }
 
-  // Change user password
+
+    /**
+   * Change the password of a user.
+   * 
+   * @param {string} email - The email of the user.
+   * @param {string} newPassword - The new password for the user.
+   * @returns {number} - The number of affected rows.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
   
   static async changeUserPassword(email, newPassword) {
     try {
@@ -118,8 +183,14 @@ class UserRepository {
   }
 
    
+  /**
+   * Get all users from the database.
+   * 
+   * @returns {User[]} - An array of all user objects.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
+  
 
-  // Get all users
   static async getAllUsers() {
     try {
       const query = "SELECT * FROM users";
@@ -131,6 +202,13 @@ class UserRepository {
     }
   }
 
+  /**
+   * Check if a user exists by their user ID.
+   * 
+   * @param {number} userId - The user ID to check.
+   * @returns {boolean} - Returns true if the user exists, false otherwise.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
 
   static async userExistsById(userId) {
     try {

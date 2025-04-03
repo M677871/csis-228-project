@@ -3,7 +3,14 @@ const moment = require("moment");
 const Instructor = require("../models/instructorModel");
 
 class InstructorRepository {
-  // Create a new instructor
+  
+      /**
+     * createInstructor: Creates a new instructor in the database.
+     * @param {Object} instructor - The instructor details.
+     * @returns {number} - The number of affected rows.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+
   static async createInstructor(instructor) {
     try {
       const query = `INSERT INTO instructors (user_id,ins_FName,ins_LName, bio, profile_picture) VALUES (?, ?, ?, ?, ?)`;
@@ -21,7 +28,13 @@ class InstructorRepository {
     }
   }
 
-  // Get instructor by ID
+      /**
+     * getInstructorById: Retrieves an instructor by their ID.
+     * @param {number} instructorId - The ID of the instructor.
+     * @returns {Instructor} - An Instructor object.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+  
   static async getInstructorById(instructorId) {
     try {
       const query = "SELECT * FROM instructors WHERE instructor_id = ?";
@@ -32,7 +45,13 @@ class InstructorRepository {
     }
   }
 
-  // Get all courses an instructor teaches
+     /**
+     * getInstructorCourses: Retrieves all courses taught by an instructor.
+     * @param {number} instructorId - The ID of the instructor.
+     * @returns {Array} - An array of courses.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+  
   static async getInstructorCourses(instructorId) {
     try {
       const query = `SELECT * FROM courses 
@@ -45,7 +64,13 @@ class InstructorRepository {
     }
   }
 
-  // Update instructor information
+      /**
+     * updateInstructor: Updates the details of an existing instructor.
+     * @param {Object} instructor - The updated instructor details.
+     * @returns {number} - The number of affected rows.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+  
   static async updateInstructor(instructor) {
     try {
       const query = `UPDATE instructors SET user_id=?, ins_FName=?,ins_LName=?,bio=?,profile_picture=? WHERE instructor_id = ?`;
@@ -65,7 +90,13 @@ class InstructorRepository {
     }
   }
 
-  // Delete an instructor
+      /**
+     * deleteInstructor: Deletes an instructor from the database.
+     * @param {number} instructorId - The ID of the instructor to delete.
+     * @returns {number} - The number of affected rows.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+  
   static async deleteInstructor(instructorId) {
     try {
       const query = `DELETE FROM instructors WHERE instructor_id = ?`;
@@ -76,7 +107,12 @@ class InstructorRepository {
     }
   }
 
-  // Get all instructors
+     /**
+     * getAllInstructors: Retrieves all instructors from the database.
+     * @returns {Array} - An array of Instructor objects.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+  
   static async getAllInstructors() {
     try {
       const query = "SELECT * FROM instructors";
@@ -87,7 +123,13 @@ class InstructorRepository {
     }
   }
 
-  // Get instructor by userId
+      /**
+     * getInstructorByUserId: Retrieves an instructor by their user ID.
+     * @param {number} userId - The user ID of the instructor.
+     * @returns {Instructor} - An Instructor object.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+  
   static async getInstructorByUserId(userId) {
     try {
       const query = "SELECT * FROM instructors WHERE user_id = ?";
@@ -99,6 +141,13 @@ class InstructorRepository {
   
   }
 
+    /**
+     * isInstructorExist: Checks if an instructor exists by their instructor ID.
+     * @param {number} instructorId - The ID of the instructor.
+     * @returns {boolean} - True if the instructor exists, false otherwise.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+
   static async isInstructorExist(instructorId) {
     try {
       const query = "SELECT * FROM instructors WHERE instructor_id = ?";
@@ -108,6 +157,14 @@ class InstructorRepository {
       throw new Error("Error checking if instructor exists: " + error.message);
     }
   }
+
+    /**
+     * isInstructorExistByUserId: Checks if an instructor exists by their user ID.
+     * @param {number} userId - The user ID of the instructor.
+     * @returns {boolean} - True if the instructor exists, false otherwise.
+     * @throws {Error} - Throws an error if there is a database issue.
+     */
+
   static async isInstructorExistByUserId(userId) {
     try {
       const query = "SELECT * FROM instructors WHERE user_id = ?";
