@@ -1,6 +1,7 @@
 const db = require("../config/db");
 const Course = require("../models/courseModel");
 const Instructor = require("../models/instructorModel");
+const Student = require('../models/studentModel');
 const moment = require("moment");
 class CourseRepository {
   // Create a new course
@@ -71,12 +72,23 @@ class CourseRepository {
       throw new Error("Error deleting course: " + error.message);
     }
   }
+  static async getStudentOfTheCourse(courseId){
+    try{
+    const query = `select * from students where studend_id IN (select student_id from enrollments where course_id =?)`
+    const rows = await db.query(query ,[courseId]);
+    return rows.length > 0 ? rows.map(Student.fromRow) : null;
+    }catch(e){
+      console.log(e);
+      throw new Error(e);
+    }
+
+  }
   static async getInstructorByCourseId(courseId) {
     try {
       const query = `SELECT * FROM instructors
                      WHERE instructor_id IN (SELECT instructor_id FROM courses WHERE course_id = ?)`;
       const rows = await db.query(query, [courseId]);
-      return rows.map(Instructor.fromRow);
+      return rows.map(Instructor.fromRow) ;
     } catch (error) {
       throw new Error("Error fetching instructor by course ID: " + error.message);
     }

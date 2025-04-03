@@ -154,7 +154,8 @@ Ensure you have the following installed:
 |--------|-----------------------------------------|--------------------------------------|
 | GET    | /api/courses                           | Get all courses                     |
 | GET    | /api/courses/:id                       | Get course by ID                    |
-| GET    | /api/courses/instructorByCourseId/:id  | Get instructor details by course ID |
+| GET    | /api/courses/instructorByCourseId/:id  | Get instructor details of a course by course ID |
+| GET    | /api/courses/stdOfCourse/:id           | Get students of a specific course by course ID  |
 | POST   | /api/courses                           | Create a new course                 |
 | PUT    | /api/courses/:id                       | Update course                       |
 | DELETE | /api/courses/:id                       | Delete course                       |

@@ -55,6 +55,18 @@ class CourseService {
       throw new Error('Error updating course: ' + error.message);
     }
   }
+  static async getStudentOfTheCourse(courseId){
+    try{
+      if (!(await courseRepository.courseExistsById(courseId))) {
+        throw new Error(`Course ID: ${courseId} does not exist`);
+      }
+      const sdOfCourse = await courseRepository.getStudentOfTheCourse(courseId);
+      return sdOfCourse;
+    }catch(e){
+      console.log(e);
+      throw new Error('Error in getting students of the course :'+e.message);
+    }
+  }
 
   static async deleteCourse(id) {
     try {

@@ -90,6 +90,18 @@ class CourseController {
      return res.status(500).json({ message: error.message });
     }
   }
+  static async getStudentsOfCourse(req, res) {
+    try {
+      const { id } = req.params;
+      
+      const students = await courseService.getStudentOfTheCourse(id);
+     
+      res.status(200).json({message:`the students of the course are :`, students:students});
+    } catch (error) {
+     return res.status(500).json({ message: error.message });
+    }
+  }
+
 }
 
 module.exports = CourseController;
