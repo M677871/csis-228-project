@@ -1,6 +1,14 @@
 const db = require("../config/db");
 const QuizAnswer =require("../models/quizAnswerModel");
 
+/**
+ * The `QuizAnswerRepository` class provides a set of static 
+ * methods to interact with the `quiz_answers` table in the database.
+ * It includes operations for creating, retrieving, updating, 
+ * and deleting quiz answers, as well as checking if a quiz answer exists.
+ * 
+ * @class
+ */
 
 class QuizAnswerRepository {
 

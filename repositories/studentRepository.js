@@ -2,6 +2,14 @@ const db = require("../config/db");
 const moment = require("moment");
 const Student = require("../models/studentModel");
 
+/**
+ * The `StudentRepository` class provides methods to interact with the `students` table in the database.
+ * It supports operations like creating, retrieving, updating, deleting student records, checking if a student exists,
+ * and fetching the courses a student is enrolled in.
+ * 
+ * @class
+ */
+
 class StudentRepository {
   
     /**

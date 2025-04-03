@@ -2,6 +2,15 @@ const db = require("../config/db");
 const moment = require("moment");
 const Instructor = require("../models/instructorModel");
 
+/**
+ * The `InstructorRepository` class provides a set of static 
+ * methods to interact with the `instructors` table in the database.
+ * It includes operations for creating, retrieving, updating, and deleting 
+ * instructor records, as well as checking if an instructor exists.
+ * 
+ * @class
+ */
+
 class InstructorRepository {
   
       /**

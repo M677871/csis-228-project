@@ -2,6 +2,16 @@ const db = require("../config/db");
 const CourseMaterial = require("../models/courseMaterialModel");
 const moment = require("moment");
 
+
+/**
+ * The `CourseMaterialRepository` class provides a set of static
+ *  methods to interact with the `course_materials` table in the database.
+ * It includes operations such as creating, updating, deleting, 
+ * retrieving, and checking for course materials associated with courses.
+ * 
+ * @class
+ */
+
 class CourseMaterialRepository {
 
   /**

@@ -2,6 +2,13 @@ const db = require("../config/db");
 const moment = require("moment");
 const Quiz = require("../models/quizModel");
 
+/**
+ * The `QuizRepository` class provides methods to interact with the `quizzes` table in the database.
+ * It supports operations like creating, retrieving, updating, deleting quizzes, and checking if a quiz exists.
+ * 
+ * @class
+ */
+
 class QuizRepository {
 
    /**

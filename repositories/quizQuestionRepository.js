@@ -1,6 +1,16 @@
 const db = require("../config/db");
 const QuizQuestion = require("../models/quizQuestionModel");
 const moment = require("moment");
+
+/**
+ * The `QuizQuestionRepository` class provides a set of static methods
+ *  to interact with the `quiz_questions` table in the database.
+ * It includes operations for creating, retrieving, updating, 
+ * deleting quiz questions, and checking if a quiz question exists.
+ * 
+ * @class
+ */
+
 class QuizQuestionRepository {
 
     /**

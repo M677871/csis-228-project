@@ -2,6 +2,15 @@ const db = require("../config/db");
 const moment = require("moment");
 const Enrollment = require("../models/enrollementModel");
 
+/**
+ * The `EnrollementRepository` class provides a set of static 
+ * methods to interact with the `enrollments` table in the database.
+ * It includes operations for creating, retrieving, 
+ * updating, and deleting enrollment records.
+ * 
+ * @class
+ */
+
 class EnrollementRepository {
 
   /**

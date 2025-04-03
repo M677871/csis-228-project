@@ -3,6 +3,16 @@ const Course = require("../models/courseModel");
 const Instructor = require("../models/instructorModel");
 const Student = require('../models/studentModel');
 const moment = require("moment");
+
+/**
+ * The `CourseRepository` class provides a set of static methods
+ *  to interact with the `courses` table in the database.
+ * It includes operations such as creating, updating, deleting, retrieving, 
+ * and checking for courses, as well as retrieving associated instructors and students.
+ * 
+ * @class
+ */
+
 class CourseRepository {
   /**
    * Create a new course.

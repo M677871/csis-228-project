@@ -1,6 +1,14 @@
 const db = require("../config/db");
 const Category = require("../models/categoryModel");
 
+/**
+ * The `CategoryRepository` class provides a set of static methods to interact with the `categories` table in the database.
+ * It allows for the creation, retrieval, updating, deletion, 
+ * and querying of categories, as well as related data such as courses and instructors.
+ * 
+ * @class
+ */
+
 class CategoryRepository {
     
     /**

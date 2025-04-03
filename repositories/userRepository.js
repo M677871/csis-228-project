@@ -3,6 +3,14 @@ const bcrypt = require("bcrypt");
 const moment = require("moment");
 const User = require("../models/userModel");
 
+/**
+ * The `UserRepository` class provides methods for interacting with the `users` table in the database.
+ * It supports operations like creating, retrieving, updating, deleting user records, checking if a user exists,
+ * and changing passwords.
+ * 
+ * @class
+ */
+
 class UserRepository {
   
   /**
