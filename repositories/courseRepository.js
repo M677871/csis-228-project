@@ -4,7 +4,18 @@ const Instructor = require("../models/instructorModel");
 const Student = require('../models/studentModel');
 const moment = require("moment");
 class CourseRepository {
-  // Create a new course
+  /**
+   * Create a new course.
+   * 
+   * @param {Object} course - The course object containing course details.
+   * @param {number} course.instructorId - The ID of the instructor for the course.
+   * @param {number} course.categorieId - The category ID of the course.
+   * @param {string} course.courseName - The name of the course.
+   * @param {string} course.description - The description of the course.
+   * @param {string} course.createAt - The creation date of the course.
+   * @returns {number} - The number of affected rows, indicating the success of the operation.
+   * @throws {Error} - Throws an error if the course creation fails.
+   */
   static async createCourse(course) {
     try {
       const query = `INSERT INTO courses (instructor_id , categorie_id, course_name, description, create_at) VALUES (?, ?, ?, ?, ?)`;
@@ -22,7 +33,13 @@ class CourseRepository {
     }
   }
 
-  // Get course by ID
+  /**
+   * Get course details by ID.
+   * 
+   * @param {number} courseId - The ID of the course to fetch.
+   * @returns {Course} - The course object populated with the course details.
+   * @throws {Error} - Throws an error if fetching the course fails.
+   */
   static async getCourseById(courseId) {
     try {
       const query = "SELECT * FROM courses WHERE course_id = ?";
@@ -33,7 +50,12 @@ class CourseRepository {
     }
   }
 
-  // Get all courses
+  /**
+   * Get all courses.
+   * 
+   * @returns {Course[]} - An array of all course objects.
+   * @throws {Error} - Throws an error if fetching the courses fails.
+   */
   static async getAllCourses() {
     try {
       const query = "SELECT * FROM courses";
@@ -44,7 +66,19 @@ class CourseRepository {
     }
   }
 
-  // Update course information
+    /**
+   * Update the information of a course.
+   * 
+   * @param {Object} course - The course object containing the updated course details.
+   * @param {number} course.instructorId - The ID of the instructor for the course.
+   * @param {number} course.categorieId - The category ID of the course.
+   * @param {string} course.courseName - The name of the course.
+   * @param {string} course.description - The description of the course.
+   * @param {string} course.createAt - The creation date of the course.
+   * @param {number} course.courseId - The ID of the course to update.
+   * @returns {number} - The number of affected rows, indicating the success of the operation.
+   * @throws {Error} - Throws an error if updating the course fails.
+   */
   static async updateCourse(course) {
     try {
       const query = `UPDATE courses SET instructor_id=?, categorie_id=?, course_name=?, description=?,create_at=? WHERE course_id = ?`;
@@ -62,7 +96,13 @@ class CourseRepository {
     }
   }
 
-  // Delete a course
+ /**
+   * Delete a course by ID.
+   * 
+   * @param {number} courseId - The ID of the course to delete.
+   * @returns {boolean} - Returns true if the course was deleted, false otherwise.
+   * @throws {Error} - Throws an error if deleting the course fails.
+   */
   static async deleteCourse(courseId) {
     try {
       const query = "DELETE FROM courses WHERE course_id = ?";
@@ -72,6 +112,16 @@ class CourseRepository {
       throw new Error("Error deleting course: " + error.message);
     }
   }
+
+
+   /**
+   * Get all students enrolled in a course.
+   * 
+   * @param {number} courseId - The ID of the course to get students for.
+   * @returns {Student[]|null} - An array of students enrolled in the course, or null if no students are found.
+   * @throws {Error} - Throws an error if fetching students fails.
+   */
+
   static async getStudentOfTheCourse(courseId){
     try{
     const query = `select * from students where studend_id IN (select student_id from enrollments where course_id =?)`
@@ -83,6 +133,16 @@ class CourseRepository {
     }
 
   }
+
+  /**
+   * Get instructor details by course ID.
+   * 
+   * @param {number} courseId - The ID of the course to get instructor details for.
+   * @returns {Instructor[]} - An array of instructor objects associated with the course.
+   * @throws {Error} - Throws an error if fetching instructor details fails.
+   */
+
+
   static async getInstructorByCourseId(courseId) {
     try {
       const query = `SELECT * FROM instructors
@@ -94,7 +154,15 @@ class CourseRepository {
     }
   }
 
-  // Check if a course exists by ID
+   /**
+   * Check if a course exists by ID.
+   * 
+   * @param {number} courseId - The ID of the course to check.
+   * @returns {boolean} - Returns true if the course exists, false otherwise.
+   * @throws {Error} - Throws an error if checking the course existence fails.
+   */
+
+
   static async courseExistsById(courseId) {
     try {
       const query = "SELECT * FROM courses WHERE course_id = ?";
