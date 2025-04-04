@@ -33,6 +33,7 @@ class InstructorRepository {
 
       return affectedRows ;
     } catch (error) {
+      console.log(error);
       throw new Error("Error creating instructor: " + error.message);
     }
   }

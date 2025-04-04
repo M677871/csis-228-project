@@ -1,7 +1,23 @@
 const quizRepository = require('../repositories/quizRepository');
 const courseRepository = require('../repositories/courseRepository');
 
+/**
+ * The `QuizService` class provides methods to manage quizzes, including fetching quiz details,
+ * creating, updating, deleting quizzes, and retrieving quizzes by course ID.
+ * 
+ * @class
+ */
+
+
 class QuizService {
+
+/**
+ * Retrieves quizzes by course ID.
+ * 
+ * * @returns {Quiz[]} - A promise that resolves to an array of quiz objects.
+ * * @throws {Error} - Throws an error if the course does not exist or the operation fails.
+ * */
+
     static async getAllQuizzes() {
         try {
         const quizzes = await quizRepository.getAllQuizzes();
@@ -10,6 +26,15 @@ class QuizService {
         throw new Error('Error fetching quizzes: ' + error.message);
         }
     }
+
+/**
+ * Retrieves a quiz by its ID.
+ * 
+ * @param {number} id - The ID of the quiz to retrieve.
+ * @returns {Quiz} - A promise that resolves to the quiz object.
+ * @throws {Error} - Throws an error if the quiz does not exist or the operation fails.
+ * */
+
     static async getQuizById(id) {
         try {
             
@@ -22,6 +47,15 @@ class QuizService {
         throw new Error('Error fetching quiz: ' + error.message);
         }
     }
+
+     /**
+   * Creates a new quiz.
+   * 
+   * @param {Object} quiz - The quiz data.
+   * @returns {Quiz} - A promise that resolves to the newly created quiz object.
+   * @throws {Error} - Throws an error if the associated course does not exist or the operation fails.
+   */
+
     static async createQuiz(quiz) {
         try {
        if (!(await courseRepository.courseExistsById(quiz.courseId))) {
@@ -33,6 +67,15 @@ class QuizService {
         throw new Error('Error creating quiz: ' + error.message);
         }
     }
+
+  /**
+   * Updates an existing quiz.
+   * 
+   * @param {Object} quizData - The updated quiz data.
+   * @returns {Quiz} - A promise that resolves to the updated quiz object.
+   * @throws {Error} - Throws an error if the quiz or course does not exist or the operation fails.
+   */
+
     static async updateQuiz(quizData) {
         try {
             
@@ -48,6 +91,15 @@ class QuizService {
         throw new Error('Error updating quiz: ' + error.message);
         }
     }
+
+  /**
+   * Deletes a quiz by its ID.
+   * 
+   * @param {number} id - The ID of the quiz to delete.
+   * @returns {void} - A promise that resolves once the quiz is deleted.
+   * @throws {Error} - Throws an error if the quiz does not exist or the operation fails.
+   */
+
     static async deleteQuiz(id) {
         try{
             

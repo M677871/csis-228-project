@@ -3,7 +3,21 @@ const bcrypt = require("bcrypt");
 const authToken = require('../utils/authToken');
 require('dotenv').config();
 
+/**
+ * The `UserService` class provides methods to manage users, including fetching user details, creating users, 
+ * updating user information, logging in, changing passwords, and deleting users.
+ * 
+ * @class
+ */
+
 class UserService {
+
+  /**
+   * Retrieves all users from the database.
+   * 
+   * @returns {User[]} - A promise that resolves to an array of user objects.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
 
   static async getAllUsers() {
     try {
@@ -13,6 +27,14 @@ class UserService {
       throw new Error("Error fetching users: " + error.message);
     }
   }
+
+  /**
+   * Retrieves a user by their ID.
+   * 
+   * @param {number} id - The ID of the user to retrieve.
+   * @returns {User} - A promise that resolves to the user object.
+   * @throws {Error} - Throws an error if the user does not exist or the operation fails.
+   */
 
   static async getUserById(id) {
     try {
@@ -27,6 +49,16 @@ class UserService {
       throw new Error("Error fetching user: " + error.message);
     }
   }
+
+/**
+ * Retrieves a user by their email address.
+ * 
+ * @param {string} email - The email address of the user to retrieve.
+ * @returns {User} - A promise that resolves to the user object.
+ * @throws {Error} - Throws an error if the user does not exist or the operation fails.
+ * */
+ 
+
   static async getUserByEmail(email) {
     try {
       
@@ -49,6 +81,15 @@ class UserService {
     }
   }
 
+
+  /**
+   * Creates a new user in the database.
+   * 
+   * @param {Object} user - The user data to create.
+   * @returns {User} - A promise that resolves to the created user object.
+   * @throws {Error} - Throws an error if the user already exists or the operation fails.
+   */
+
   static async createUser(user) {
     try {
       
@@ -61,6 +102,14 @@ class UserService {
       throw new Error("Error creating user: " + error.message);
     }
   }
+
+  /**
+   * Updates an existing user in the database.
+   * 
+   * @param {Object} userData - The user data to update.
+   * @returns {User} - A promise that resolves to the updated user object.
+   * @throws {Error} - Throws an error if the user does not exist or the operation fails.
+   * */
 
   static async updateUser( userData) {
     try {
@@ -80,6 +129,14 @@ class UserService {
     }
   }
 
+  /**
+   * Logs in a user by validating their email and password.
+   * 
+   * @param {string} email - The email address of the user.
+   * @param {string} password - The password of the user.
+   * @returns {Object} - A promise that resolves to an object containing the login status and token.
+   * @throws {Error} - Throws an error if the email does not exist or the password is incorrect.
+   * */
 
   static async login(email, password) {
     try{
@@ -113,6 +170,17 @@ class UserService {
 
 }
 
+
+  /**
+   * Changes the password of a user.
+   * 
+   * @param {string} email - The email address of the user.
+   * @param {string} currentPassword - The current password of the user.
+   * @param {string} newPassword - The new password to set.
+   * @returns {User} - A promise that resolves to the updated user object.
+   * @throws {Error} - Throws an error if the email does not exist or the current password is incorrect.
+   */
+
   static async changePassword(email, currentPassword, newPassword) {
     try {
       
@@ -139,6 +207,15 @@ class UserService {
       throw new Error("Error changing password: " + error.message);
     }
   }
+
+/**
+   * Deletes a user from the database.
+   * 
+   * @param {number} id - The ID of the user to delete.
+   * @returns {User} - A promise that resolves to the deleted user object.
+   * @throws {Error} - Throws an error if the user does not exist or the operation fails.
+   */
+
   static async deleteUser(id) {
     try {
       
@@ -152,6 +229,16 @@ class UserService {
     }
   }
 
+
+  /**
+   * Authenticates a user by validating their email and password.
+   * 
+   * @param {string} email - The email address of the user.
+   * @param {string} password - The password of the user.
+   * @return {boolean} - A promise that resolves to true if authentication is successful, false otherwise.
+   * @throws {Error} - Throws an error if the email does not exist or the password is incorrect.
+   */
+  
   static async authenticateUser(email, password) {
     try {
       const user = await userRepository.getUserByEmail(email);

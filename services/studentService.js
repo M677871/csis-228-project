@@ -1,7 +1,23 @@
 const studentRepository = require('../repositories/studentRepository');
 const User = require('../repositories/userRepository')
 
+/**
+ * The `StudentService` class provides methods to manage student data, including fetching student details,
+ * creating, updating, deleting students, and retrieving their courses.
+ * 
+ * @class
+ */
+
+
 class StudentService {
+
+ /**
+   * Retrieves all students from the database.
+   * 
+   * @returns {Student[]} - A promise that resolves to an array of student objects.
+   * @throws {Error} - Throws an error if the operation fails.
+   */
+
   static async getAllStudents() {
     try {
       const students = await studentRepository.getAllStudents();
@@ -10,6 +26,14 @@ class StudentService {
       throw new Error('Error fetching students: ' + error.message);
     }
   }
+
+  /**
+   * Retrieves a student by their ID.
+   * 
+   * @param {number} id - The ID of the student to retrieve.
+   * @returns {Student} - A promise that resolves to the student object.
+   * @throws {Error} - Throws an error if the student does not exist or the operation fails.
+   */
 
   static async getStudentById(id) {
     try {
@@ -23,6 +47,14 @@ class StudentService {
       throw new Error('Error fetching student: ' + error.message);
     }
   }
+
+  /**
+   * Creates a new student.
+   * 
+   * @param {Object} student - The student data.
+   * @returns {Student} - A promise that resolves to the newly created student object.
+   * @throws {Error} - Throws an error if the student already exists, the user does not exist, or the user is not a student.
+   */
 
   static async createStudent(student) {
     try {
@@ -43,6 +75,14 @@ class StudentService {
       throw new Error('Error creating student: ' + error.message);
     }
   }
+
+  /**
+   * Updates an existing student's information.
+   * 
+   * @param {Object} studentData - The updated student data.
+   * @returns {Student} - A promise that resolves to the updated student object.
+   * @throws {Error} - Throws an error if the student does not exist, the user does not exist, or the user is not a student.
+   */
 
   static async updateStudent( studentData) {
     try {
@@ -74,6 +114,14 @@ class StudentService {
     }
   }
 
+  /**
+   * Deletes a student by their ID.
+   * 
+   * @param {number} id - The ID of the student to delete.
+   * @returns {void} - A promise that resolves once the student is deleted.
+   * @throws {Error} - Throws an error if the student does not exist or the operation fails.
+   */
+
   static async deleteStudent(id) {
     try {
       
@@ -85,6 +133,15 @@ class StudentService {
       throw new Error('Error deleting student: ' + error.message);
     }
   }
+
+  /**
+   * Retrieves a student's courses by their ID.
+   * 
+   * @param {number} id - The ID of the student to retrieve courses for.
+   * @returns {Course[]} - A promise that resolves to an array of courses the student is enrolled in.
+   * @throws {Error} - Throws an error if the student does not exist or the operation fails.
+   */
+
   static async getStudentCourses(id) {
     try {
       if (!(await studentRepository.studentExists(id))) {

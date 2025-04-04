@@ -2,7 +2,21 @@ const enrollementRepository = require('../repositories/enrollementRepository');
 const studentRepository = require('../repositories/studentRepository');
 const courseRepository = require('../repositories/courseRepository');
 
+/**
+ * The `enrollementService` class provides methods for managing student enrollments in courses.
+ * It includes methods for fetching, creating, updating, and deleting enrollments.
+ * 
+ * @class
+ */
+
 class enrollementService{
+
+  /**
+   * Retrieves all enrollments.
+   * 
+   * @returns {Promise<Array>} - A promise that resolves to an array of all enrollment objects.
+   * @throws {Error} - Throws an error if fetching enrollments fails.
+   */
 
     static async getAllEnrollements(){
         try{
@@ -12,6 +26,15 @@ class enrollementService{
             throw new Error('Error fetching enrollements: ' + error.message);
         }
     }
+
+  /**
+   * Retrieves an enrollment by its ID.
+   * 
+   * @param {number} id - The ID of the enrollment.
+   * @returns {Object} - A promise that resolves to the enrollment object.
+   * @throws {Error} - Throws an error if the enrollment does not exist.
+   */
+
     static async getEnrollementById(id){
         try{
             
@@ -24,6 +47,15 @@ class enrollementService{
             throw new Error('Error fetching enrollement: ' + error.message);
         }
     }
+
+  /**
+   * Creates a new enrollment for a student in a course.
+   * 
+   * @param {Object} enrollement - The enrollment data.
+   * @returns {Object} - A promise that resolves to the newly created enrollment object.
+   * @throws {Error} - Throws an error if the enrollment already exists, if the student or course does not exist.
+   */
+
     static async createEnrollement(enrollement){
         try{
             if((await enrollementRepository.getEnrollmentByStudentAndCourse(enrollement.studentId, enrollement.courseId))){
@@ -42,6 +74,16 @@ class enrollementService{
             throw new Error('Error creating enrollement: ' + error.message);
         }
     }
+
+  /**
+   * Updates an existing enrollment.
+   * 
+   * @param {Object} enrollementData - The updated enrollment data.
+   * @returns {Object} - A promise that resolves to the updated enrollment object.
+   * @throws {Error} - Throws an error if the enrollment does not exist, if the student or course does not exist,
+   *                   or if the enrollment already exists for the student and course.
+   */
+
     static async updateEnrollement(enrollementData){
         try{
             

@@ -25,7 +25,7 @@ class InstructorController {
         }
     }
 
- static   async createInstructor(req, res) {
+ static  async createInstructor(req, res) {
         try {
             const {userId, insFName, insLName , bio, profilePicture} = req.body;
             
@@ -43,9 +43,7 @@ class InstructorController {
             const {userId, insFName, insLName , bio, profilePicture} = req.body;
             let instructor = new Instructor(id,userId, insFName, insLName , bio, profilePicture)
             const updatedInstructor = await instructorService.updateInstructor(instructor);
-            if (!updatedInstructor) {
-                return res.status(404).json({ message: 'Instructor not found' });
-            }
+           
           return  res.status(200).json({message:`instructor updated successufly`,instructor:updatedInstructor});
         } catch (error) {
           return  res.status(500).json({ message: error.message });
