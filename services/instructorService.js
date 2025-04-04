@@ -26,7 +26,7 @@ class InstructorService {
       if(! (await userRepository.userExistsById(instructor.userId))){
         throw new Error(`User ID: ${instructor.userId} does not exist`);
       }
-      if (await InstructorRepository.getInstructorByUserId(instructor.userId)) {
+      if (await InstructorRepository.isInstructorExistByUserId(instructor.userId)) {
         throw new Error(`Instructor with user ID: ${instructor.userId} already exists`);
       }
     
