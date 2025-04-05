@@ -1,5 +1,7 @@
 const db = require("../config/db");
 const Category = require("../models/categoryModel");
+const Student = require("../models/studentModel");
+const Instructor = require("../models/instructorModel");
 
 /**
  * The `CategoryRepository` class provides a set of static methods to interact with the `categories` table in the database.
@@ -118,9 +120,44 @@ static async getCategoryInstructors(categoryId) {
     try {
         const query = `SELECT * FROM instructors WHERE instructor_id IN (SELECT instructor_id FROM courses WHERE categorie_id = ?)`; 
         const rows = await db.query(query, [categoryId]);
-        return rows;
+        return rows.length > 0 ? rows.map(Instructor.fromRow) : null;
     } catch (error) {
         throw new Error("Error fetching category instructors: " + error.message);
+    }
+}
+
+/**
+     * Retrieves all students enrolled in courses within a specific category.
+     * @param {number} categoryId The ID of the category.
+     * @returns {Array<Object>} An array of student objects.
+     * @throws {Error} If an error occurs during the fetch operation.
+     */
+
+static async getcategoryStudents(categoryId) {
+    try {
+        const query = `SELECT * FROM students WHERE student_id IN (SELECT student_id FROM enrollements 
+        WHERE course_id IN (SELECT course_id FROM courses WHERE categorie_id = ?))`;
+        const rows = await db.query(query, [categoryId]);
+        return rows.length > 0 ? rows.map(Student.fromRow) : null;
+    } catch (error) {
+        throw new Error("Error fetching category students: " + error.message);
+    }
+}
+
+/**
+     * Retrieves a category by its name.
+     * @param {string} categoryName The name of the category to retrieve.
+     * @returns {Category} The category object.
+     * @throws {Error} If an error occurs during the fetch operation.
+     */
+
+static async getCategoryByName(categoryName) {
+    try {
+        const query = `SELECT * FROM categories WHERE category_name = ?`;
+        const rows = await db.query(query, [categoryName]);
+        return rows.length > 0 ? Category.fromRow[rows[0]] : null;
+    } catch (error) {
+        throw new Error("Error fetching category by name: " + error.message);
     }
 }
  /**
