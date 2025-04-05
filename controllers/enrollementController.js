@@ -2,7 +2,22 @@ const enrollementService = require("../services/enrollementService");
 const Enrollement = require("../models/enrollementModel");
 const moment = require('moment');
 
+/**
+ * @class EnrollementController
+ * @description This class manages the enrollement processes, 
+ * including creating, retrieving, updating, and deleting enrollements.
+ */
+
 class EnrollementController {
+
+  /**
+   * @async
+   * @description Creates a new enrollement in the system.
+   * @param {Object} req - The request object containing the studentId, courseId, and status for the new enrollement.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the result of the enrollement creation.
+   */
+
   static async createEnrollement(req, res) {
     try {
       const { studentId, courseId, status } = req.body;
@@ -21,6 +36,14 @@ class EnrollementController {
     }
   }
 
+  /**
+   * @async
+   * @description Retrieves all enrollements from the system.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the list of all enrollements.
+   */
+
   static async getEnrollements(req, res) {
     try {
       const enrollements = await enrollementService.getAllEnrollements();
@@ -29,6 +52,14 @@ class EnrollementController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Retrieves a specific enrollement by its unique ID.
+   * @param {Object} req - The request object containing the enrollement ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the enrollement data.
+   */
 
   static async getEnrollementById(req, res) {
     try {
@@ -41,6 +72,15 @@ class EnrollementController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Updates an existing enrollement in the system.
+   * @param {Object} req - The request object containing the enrollement ID in the params and
+   *  updated data in the body (studentId, courseId, status).
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response with the updated enrollement data.
+   */
 
   static async updateEnrollement(req, res) {
     try {
@@ -63,6 +103,14 @@ class EnrollementController {
       return res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Deletes an enrollement from the system by its unique ID.
+   * @param {Object} req - The request object containing the enrollement ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response indicating successful deletion of the enrollement.
+   */
 
   static async deleteEnrollement(req, res) {
     try {

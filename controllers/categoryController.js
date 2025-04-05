@@ -1,6 +1,22 @@
 const categoryService = require("../services/categoryService");
 const Category = require("../models/categoryModel");
+
+/**
+ * @class CategoryController
+ * @description This class handles the management of categories, 
+ * including retrieving, creating, updating, and deleting categories.
+ */
+
 class CategoryController {
+
+ /**
+   * @async
+   * @description Retrieves all categories.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing all categories.
+   */
+
   static async getAllCategories(req, res) {
     try {
       const categories = await categoryService.getAllCategories();
@@ -9,6 +25,14 @@ class CategoryController {
       return res.status(500).json({ message: error.message });
     }
   }
+  
+  /**
+   * @async
+   * @description Retrieves a specific category by its unique ID.
+   * @param {Object} req - The request object containing the category ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the category data.
+   */
 
   static async getCategoryById(req, res) {
     try {
@@ -21,6 +45,14 @@ class CategoryController {
       return res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Creates a new category.
+   * @param {Object} req - The request object containing category details (categoryName, description).
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the newly created category.
+   */
 
   static async createCategory(req, res) {
     try {
@@ -35,6 +67,15 @@ class CategoryController {
       return res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Updates an existing category by its unique ID.
+   * @param {Object} req - The request object containing the category ID 
+   * in the params and updated details in the body (categoryName, description).
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response with the updated category.
+   */
 
   static async updateCategory(req, res) {
     try {
@@ -52,6 +93,14 @@ class CategoryController {
     }
   }
 
+  /**
+   * @async
+   * @description Deletes a category by its unique ID.
+   * @param {Object} req - The request object containing the category ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response indicating successful deletion of the category.
+   */
+
   static async deleteCategory(req, res) {
     try {
       const { id } = req.params;
@@ -65,6 +114,15 @@ class CategoryController {
       return res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Retrieves all courses in a specific category.
+   * @param {Object} req - The request object containing the category ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the courses in the category.
+   */
+
   static async getCategoryCourses(req, res) {
     try {
       const { id } = req.params;
@@ -75,6 +133,15 @@ class CategoryController {
       return res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Retrieves all instructors associated with a specific category.
+   * @param {Object} req - The request object containing the category ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the instructors associated with the category.
+   */
+
 static async getCategoryInstructors(req, res) {
     try {
       const { id } = req.params;

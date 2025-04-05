@@ -4,8 +4,22 @@ const moment = require('moment');
 
 const userServices = require('../services/userService');
 
+/**
+ * @class UserController
+ * @description The UserController class handles user-related operations such 
+ * as user creation, updating, deletion, login, password change, and retrieval.
+ */
+
 class UserController {
     
+   /**
+     * @async
+     * @description Creates a new user in the system with the provided data (email, password, userType).
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @returns {Object} JSON response with a success message and the created user object.
+     */
+
    static async createUser(req, res) {
         try {
              const { email, password ,userType  } = req.body;
@@ -23,7 +37,14 @@ class UserController {
         }
     }
        
-        
+    /**
+     * @async
+     * @description Updates an existing user's information by their ID.
+     * @param {Object} req - The request object containing the user ID and data.
+     * @param {Object} res - The response object.
+     * @returns {Object} JSON response with a success message and the updated user object.
+     */ 
+    
     static async updateUser(req, res) {
         try {
             const { id } = req.params;
@@ -40,6 +61,15 @@ class UserController {
 
         }
     }
+
+    /**
+     * @async
+     * @description Allows a user to change their password.
+     * @param {Object} req - The request object containing the user's email and passwords.
+     * @param {Object} res - The response object.
+     * @returns {Object} JSON response with a success message and result of password change.
+     */
+
     static async changePassword(req, res) {
         try {
           
@@ -58,7 +88,14 @@ class UserController {
         }
     }
 
-          
+    /**
+     * @async
+     * @description Logs a user in by validating their email and password.
+     * @param {Object} req - The request object containing the user's email and password.
+     * @param {Object} res - The response object.
+     * @returns {Object} JSON response with the user's data and a JWT token if successful.
+     */ 
+    
     static async login(req, res) {
         try {
             const { email, password } = req.body;
@@ -70,6 +107,15 @@ class UserController {
             return res.status(500).json({ message: error.message });
         }
     }
+
+    /**
+     * @async
+     * @description Retrieves a user by their email address.
+     * @param {Object} req - The request object containing the user's email.
+     * @param {Object} res - The response object.
+     * @returns {Object} JSON response with the user's data.
+     */
+
     static async getUserByEmail(req, res) {
         try {
             const { email } = req.body;
@@ -82,6 +128,15 @@ class UserController {
             return res.status(500).json({ message: error.message });
         }
     }
+
+    /**
+     * @async
+     * @description Retrieves a list of all users.
+     * @param {Object} req - The request object.
+     * @param {Object} res - The response object.
+     * @returns {Object} JSON response with a list of all users.
+     */
+
     static async getUsers(req, res) {
         try {
             const users = await userServices.getAllUsers();
@@ -91,6 +146,15 @@ class UserController {
             return res.status(500).json({ message: error.message });
         }
     }
+
+    /**
+     * @async
+     * @description Retrieves a user by their unique ID.
+     * @param {Object} req - The request object containing the user ID.
+     * @param {Object} res - The response object.
+     * @returns {Object} JSON response with the user data.
+     */
+
     static async getUserById(req, res) {
         try {
             const { id } = req.params;
@@ -107,6 +171,15 @@ class UserController {
             return res.status(500).json({ message: error.message });
         }
     }
+
+    /**
+     * @async
+     * @description Deletes a user by their unique ID.
+     * @param {Object} req - The request object containing the user ID.
+     * @param {Object} res - The response object.
+     * @returns {Object} JSON response with a success message.
+     */
+
     static async deleteUser(req, res) {
         try {
             const { id } = req.params;

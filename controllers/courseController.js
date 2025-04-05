@@ -1,7 +1,23 @@
 const courseService = require("../services/courseService");
 const Course = require("../models/courseModel");
 const moment = require("moment");
+
+/**
+ * @class CourseController
+ * @description This class handles the management of courses, 
+ * including retrieving, creating, updating, and deleting courses.
+ */
+
 class CourseController {
+
+  /**
+   * @async
+   * @description Retrieves all courses.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing all courses.
+   */
+
   static async getAllCourses(req, res) {
     try {
       const courses = await courseService.getAllCourses();
@@ -10,6 +26,14 @@ class CourseController {
     return  res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Retrieves a specific course by its unique ID.
+   * @param {Object} req - The request object containing the course ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the course data.
+   */
 
   static async getCourseById(req, res) {
     try {
@@ -22,6 +46,15 @@ class CourseController {
      return res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Creates a new course.
+   * @param {Object} req - The request object containing course details 
+   * (instructorId, categorieId, courseName, description).
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the newly created course.
+   */
 
   static async createCourse(req, res) {
     try {
@@ -41,6 +74,15 @@ class CourseController {
     return  res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Updates an existing course by its unique ID.
+   * @param {Object} req - The request object containing the course ID 
+   * in the params and updated details in the body (instructorId, categorieId, courseName, description).
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response with the updated course.
+   */
 
   static async updateCourse(req, res) {
     try {
@@ -62,6 +104,14 @@ class CourseController {
     }
   }
 
+  /**
+   * @async
+   * @description Deletes a course by its unique ID.
+   * @param {Object} req - The request object containing the course ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response indicating successful deletion of the course.
+   */
+
   static async deleteCourse(req, res) {
     try {
       const { id } = req.params;
@@ -79,6 +129,15 @@ class CourseController {
     return  res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Retrieves the instructor of a specific course.
+   * @param {Object} req - The request object containing the course ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the course instructor's data.
+   */
+
   static async getInstructorByCourseId(req, res) {
     try {
       const { id } = req.params;
@@ -90,6 +149,15 @@ class CourseController {
      return res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Retrieves all students enrolled in a specific course.
+   * @param {Object} req - The request object containing the course ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the list of students enrolled in the course.
+   */
+
   static async getStudentsOfCourse(req, res) {
     try {
       const { id } = req.params;

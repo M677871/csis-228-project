@@ -1,7 +1,23 @@
 const courseMaterialService = require("../services/courseMaterialService");
 const CourseMaterial = require("../models/courseMaterialModel");
 const moment = require("moment");
+
+/**
+ * @class CourseMaterialController
+ * @description This class handles the management of course materials, including retrieving
+ * , creating, updating, and deleting materials for courses.
+ */
+
 class CourseMaterialController {
+
+  /**
+   * @async
+   * @description Retrieves all course materials.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing all course materials.
+   */
+
   static async getAllCourseMaterials(req, res) {
     try {
       const courseMaterials =
@@ -11,6 +27,14 @@ class CourseMaterialController {
       return res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Retrieves a specific course material by its unique ID.
+   * @param {Object} req - The request object containing the course material ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the course material data.
+   */
 
   static async getCourseMaterialById(req, res) {
     try {
@@ -24,6 +48,14 @@ class CourseMaterialController {
       return res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Creates a new course material.
+   * @param {Object} req - The request object containing course material details (courseId, title, materialType, filePath).
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the newly created course material.
+   */
 
   static async createCourseMaterial(req, res) {
     try {
@@ -46,6 +78,15 @@ class CourseMaterialController {
     }
   }
 
+  /**
+   * @async
+   * @description Updates an existing course material by its unique ID.
+   * @param {Object} req - The request object containing the course material ID 
+   * in the params and updated details in the body (courseId, title, materialType, filePath).
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response with the updated course material.
+   */
+
   static async updateCourseMaterial(req, res) {
     try {
       const { id } = req.params;
@@ -66,6 +107,14 @@ class CourseMaterialController {
       return res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Deletes a course material by its unique ID.
+   * @param {Object} req - The request object containing the course material ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response indicating successful deletion of the course material.
+   */
 
   static async deleteCourseMaterial(req, res) {
     try {

@@ -1,7 +1,23 @@
 const quizQuestionService = require("../services/quizQuestionService");
 const Question = require("../models/quizQuestionModel");
 const moment = require('moment');
+
+/**
+ * @class QuizQuestionController
+ * @description This class handles operations related to quiz questions such as
+ *  retrieving, creating, updating, and deleting quiz questions.
+ */
+
 class QuizQuestionController {
+
+  /**
+   * @async
+   * @description Retrieves all quiz questions.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing all quiz questions.
+   */
+
   static async getAllQuestions(req, res) {
     try {
       const questions = await quizQuestionService.getAllQuizQuestions();
@@ -10,6 +26,14 @@ class QuizQuestionController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Retrieves a specific quiz question by its unique ID.
+   * @param {Object} req - The request object containing the question ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response with the quiz question.
+   */
 
   static async getQuestionById(req, res) {
     try {
@@ -21,6 +45,14 @@ class QuizQuestionController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Creates a new quiz question based on the provided data.
+   * @param {Object} req - The request object containing the quizId and questionText.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response containing the created quiz question.
+   */
 
   static async createQuestion(req, res) {
     try {
@@ -42,6 +74,14 @@ class QuizQuestionController {
     
   }
 
+  /**
+   * @async
+   * @description Updates an existing quiz question by its unique ID.
+   * @param {Object} req - The request object containing the question ID and updated data (quizId and questionText).
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response with the updated quiz question.
+   */
+
   static async updateQuestion(req, res) {
     try {
         const { id } = req.params;
@@ -56,6 +96,14 @@ class QuizQuestionController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  /**
+   * @async
+   * @description Deletes a quiz question by its unique ID.
+   * @param {Object} req - The request object containing the question ID in the params.
+   * @param {Object} res - The response object.
+   * @returns {Object} JSON response with a success message.
+   */
 
   static async deleteQuestion(req, res) {
     try {
