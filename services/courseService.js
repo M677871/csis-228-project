@@ -1,4 +1,6 @@
 const courseRepository = require('../repositories/courseRepository');
+const instructorRepository = require('../repositories/instructorRepository');
+const categoryRepository = require('../repositories/categoryRepository');
 
 /**
  * CourseService class provides methods for managing courses.
@@ -78,6 +80,12 @@ class CourseService {
 
   static async createCourse(course) {
     try {
+      if (!(await instructorRepository.isInstructorExist(course.instructorId))) {
+        throw new Error(`Instructor ID: ${course.instructorId} does not exist`);
+      }
+      if (!(await categoryRepository.isCategoryExists(course.categorieId))) {
+        throw new Error(`Category ID: ${course.categorieId} does not exist`);
+      }
       const newCourse = await courseRepository.createCourse(course);
       return newCourse;
     } catch (error) {
@@ -98,6 +106,12 @@ class CourseService {
       
       if (!(await courseRepository.courseExistsById(course.courseId))) {
         throw new Error(`Course ID: ${id} does not exist`);
+      }
+      if (!(await instructorRepository.isInstructorExist(course.instructorId))) {
+        throw new Error(`Instructor ID: ${course.instructorId} does not exist`);
+      }
+      if (!(await categoryRepository.isCategoryExists(course.categorieId))) {
+        throw new Error(`Category ID: ${course.categorieId} does not exist`);
       }
       const updatedCourse = await courseRepository.updateCourse(courseData);
       return updatedCourse;
