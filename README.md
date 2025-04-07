@@ -17,7 +17,6 @@ Ensure you have the following installed:
 │── /repositories           # Database access layer
 │── /services               # Business logic
 │── /controllers            # Request handlers
-│── /middlewares            # Custom middlewares (e.g., auth, error handling)
 │── /validators             # Request validation logic
 │── /routes                 # API route definitions
 │── /utils                  # Helper functions
