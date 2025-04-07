@@ -104,18 +104,19 @@ class CourseService {
   static async updateCourse( courseData) {
     try {
       
-      if (!(await courseRepository.courseExistsById(course.courseId))) {
-        throw new Error(`Course ID: ${id} does not exist`);
+      if (!(await courseRepository.courseExistsById(courseData.courseId))) {
+        throw new Error(`Course ID: ${courseData.courseId} does not exist`);
       }
-      if (!(await instructorRepository.isInstructorExist(course.instructorId))) {
-        throw new Error(`Instructor ID: ${course.instructorId} does not exist`);
+      if (!(await instructorRepository.isInstructorExist(courseData.instructorId))) {
+        throw new Error(`Instructor ID: ${courseData.instructorId} does not exist`);
       }
-      if (!(await categoryRepository.isCategoryExists(course.categorieId))) {
-        throw new Error(`Category ID: ${course.categorieId} does not exist`);
+      if (!(await categoryRepository.isCategoryExists(courseData.categorieId))) {
+        throw new Error(`Category ID: ${courseData.categorieId} does not exist`);
       }
       const updatedCourse = await courseRepository.updateCourse(courseData);
       return updatedCourse;
     } catch (error) {
+      console.log(error);
       throw new Error('Error updating course: ' + error.message);
     }
   }
