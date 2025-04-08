@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/' , userController.getUsers);
 router.get('/:id',validateUserId, userController.getUserById);
-router.get('/email',validateUserEmail,userController.getUserByEmail);
+router.get('/email/:email',validateUserEmail,userController.getUserByEmail);
 router.put('/changePassword' ,validateUserChangePassword, userController.changePassword); 
 router.post('/', validateUser, userController.createUser);
 router.put('/:id',validateUserId,validateUser, userController.updateUser);

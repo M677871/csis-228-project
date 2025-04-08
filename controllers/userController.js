@@ -118,10 +118,12 @@ class UserController {
 
     static async getUserByEmail(req, res) {
         try {
-            const { email } = req.body;
+            const { email } = req.params;
             const user = await userServices.getUserByEmail(email);
             
             return res.status(200).json(user);
+
+            
         }
         catch (error) {
             console.log(error);

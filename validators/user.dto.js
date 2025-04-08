@@ -39,7 +39,7 @@ const validateUserId = [
     }
 ]
 const validateUserEmail = [
-    body('email')
+    param('email')
         .isEmail()
         .withMessage('Invalid email format')
         .notEmpty()
