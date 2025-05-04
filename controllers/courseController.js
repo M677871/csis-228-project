@@ -170,6 +170,18 @@ class CourseController {
     }
   }
 
+
+  static async loadCoursesView(req, res) {
+    try {
+      const courses = await courseService.getAllCourses();
+      res.render('courses.ejs', { title: "Courses", courses });
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
 }
+
+
 
 module.exports = CourseController;

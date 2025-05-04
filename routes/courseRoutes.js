@@ -3,6 +3,8 @@ const courseController = require('../controllers/courseController');
 const {validateCourse, validateCourseId} = require('../validators/course.dto');
 const router = express.Router();
 
+
+router.get('/view-courses' , courseController.loadCoursesView);
 router.get('/instructorByCourseId/:id', courseController.getInstructorByCourseId);
 router.get('/stdOfCourse/:id',courseController.getStudentsOfCourse);
 router.get('/', courseController.getAllCourses);

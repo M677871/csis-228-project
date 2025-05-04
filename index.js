@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const ejs = require("ejs");
 const cors = require("cors");
 require("dotenv").config();
@@ -19,7 +20,7 @@ const resultRoutes = require('./routes/quizResultRoutes');
 
 const courses = require('./services/courseService');
 
-
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use(cors());
 //app.use(bodyParser.json());
