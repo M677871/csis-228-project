@@ -19,6 +19,10 @@ const questionRoutes = require('./routes/quizQuestionRoutes');
 const resultRoutes = require('./routes/quizResultRoutes');
 
 const courses = require('./services/courseService');
+app.set('views', path.join(__dirname, 'views'));
+
+
+app.set('view engine', 'ejs');
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 

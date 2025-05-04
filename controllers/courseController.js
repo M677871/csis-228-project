@@ -1,4 +1,5 @@
 const courseService = require("../services/courseService");
+const categoryService = require("../services/categoryService");
 const Course = require("../models/courseModel");
 const moment = require("moment");
 
@@ -173,15 +174,25 @@ class CourseController {
 
   static async loadCoursesView(req, res) {
     try {
-      const courses = await courseService.getAllCourses();
-      res.render('courses.ejs', { title: "Courses", courses });
+      
+      const cats = await categoryService.getAllCategories();
+
+      
+      const categories = [];
+      for (const cat of cats) {
+        const courses = await categoryService.getCategoryCourses(cat.categoryId);
+        if (courses.length) {
+          categories.push({ category: cat, courses });
+        }
+      }
+
+      return res.render('courses', { categories });
     } catch (error) {
-      console.error("Error fetching courses:", error);
-      res.status(500).send("Internal Server Error");
+      console.error("Error fetching category courses:", error);
+      return res.status(500).send("Internal Server Error");
     }
   }
+
 }
-
-
 
 module.exports = CourseController;
