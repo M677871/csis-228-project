@@ -1,4 +1,5 @@
 const express = require("express");
+const ejs = require("ejs");
 const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT;
@@ -16,9 +17,14 @@ const answerRoutes = require('./routes/quizAnswerRoutes');
 const questionRoutes = require('./routes/quizQuestionRoutes');
 const resultRoutes = require('./routes/quizResultRoutes');
 
+const courses = require('./services/courseService');
+
+
 
 app.use(cors());
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use('/api/users',userRoutes);
 app.use('/api/instuctor',instructorRoutes);
 app.use('/api/student',studentRoutes);
@@ -30,6 +36,17 @@ app.use('/api/answer',answerRoutes);
 app.use('/api/category',categoryRoutes);
 app.use('/api/question',questionRoutes);
 app.use('/api/result',resultRoutes);
+
+
+app.get('/' , async (req , res) => {
+    try{
+    // const coursesList = await courses.getAllCourses();
+    res.render('home.ejs', { title: 'Home' });
+    }catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
