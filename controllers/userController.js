@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 
@@ -198,6 +199,67 @@ class UserController {
             return res.status(500).json({ message: error.message });
         }
     }
+
+
+    static showLoginForm(req, res) {
+        res.render('login', { error: null });
+      }
+    
+      static async loginForm(req, res) {
+        const errs = validationResult(req);
+        if (!errs.isEmpty()) {
+          return res.render('login', { error: 'Please enter a valid email & password.' });
+        }
+        try {
+          const { email, password } = req.body;
+          
+          const user = await userServices.getUserByEmail(email);
+          if (!user) {
+            return res.render('login', { error: 'No account found. Please sign up.' });
+          }
+          const match = await bcrypt.compare(password, user.password);
+          if (!match) {
+            return res.render('login', { error: 'Incorrect password.' });
+          }
+          req.session.user = { id: user.id, email: user.email, userType: user.userType };
+          return res.redirect('/');
+        } catch (err) {
+          console.error(err);
+          return res.render('login', { error: 'Server error. Please try again.' });
+        }
+      }
+      
+      static showSignupForm(req, res) {
+        res.render('signup', { error: null });
+      }
+    
+      static async signupForm(req, res) {
+        const errs = validationResult(req);
+        if (!errs.isEmpty()) {
+          return res.render('signup', { error: 'Please fill all fields correctly.' });
+        }
+    
+        try {
+          const { name, email, password, userType } = req.body;
+        
+          if (await userServices.getUserByEmail(email)) {
+            return res.render('signup', { error: 'Email is already registered. Please log in.' });
+          }
+        
+          const hashed = await bcrypt.hash(password, 10);
+          await userServices.createUser({
+            name,
+            email,
+            password:  hashed,
+            userType,
+            createdAt: moment().format('YYYY-MM-DD')
+          });
+          return res.redirect('/login');
+        } catch (err) {
+          console.error(err);
+          return res.render('signup', { error: 'Registration failed. Please try again.' });
+        }
+      }
     
 }
 module.exports = UserController;
