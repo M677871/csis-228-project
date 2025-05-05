@@ -1,41 +1,19 @@
-
-<nav class="navbar navbar-expand-md navbar-light bg-white border-bottom">
-  <div class="container">
-    <!-- Brand -->
-    <a class="navbar-brand d-flex align-items-center me-0 me-md-3" href="/">
-      <i class="bi bi-journal-bookmark-fill fs-3 text-primary me-2"></i>
-      <span class="fs-4 fw-bold">LearnOnline</span>
-    </a>
-
-    <!-- Toggler for mobile -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#mainNav"
-      aria-controls="mainNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Links -->
-    <div class="collapse navbar-collapse justify-content-center" id="mainNav">
-      <ul class="navbar-nav mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link px-3" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link px-3" href="/api/course/view-courses">Courses</a>
-        </li>
-      </ul>
+<div class="container">
+  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <div class="col-md-3 mb-2 mb-md-0">
+      <a href="/" class="d-inline-flex align-items-center text-decoration-none text-dark fs-4 fw-bold">
+        📚 LearnOnline
+      </a>
     </div>
 
-    <!-- Auth buttons -->
-    <div class="d-flex">
-      <a href="/login" class="btn btn-outline-primary me-2">Login</a>
-      <a href="/signup" class="btn btn-primary">Sign Up</a>
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
+      <li><a href="/api/course/view-courses" class="nav-link px-2">Courses</a></li>
+    </ul>
+
+    <div class="col-md-3 text-end">
+      <a href="/api/users/login" class="btn btn-outline-primary me-2">Login</a>
+      <a href="/api/users/signup" class="btn btn-primary">Sign‑up</a>
     </div>
-  </div>
-</nav>
+  </header>
+</div>

@@ -69,6 +69,7 @@
     .separator:not(:empty)::after { margin-left: 0.75rem; }
   </style>
 </head>
+<%- include('partials/header') %>
 <body>
   <div class="d-flex align-items-center justify-content-center vh-100 px-3">
     <div class="card bg-white p-4 w-100">
@@ -78,7 +79,7 @@
       </div>
 
 
-      <form action="/signup" method="POST" novalidate>
+      <form action="/api/users/signup" method="POST" novalidate>
         <div class="mb-3 position-relative">
           <i class="bi bi-person-fill form-icon"></i>
           <input
@@ -136,12 +137,12 @@
 
         <p class="text-center small mt-4 mb-0">
           Already have an account?
-          <a href="/login" class="text-primary fw-bold">Login here</a>
+          <a href="/api/users/login" class="text-primary fw-bold">Login here</a>
         </p>
       </form>
     </div>
   </div>
-
+<%- include('partials/footer') %>
   <script>
     function togglePassword(inputId, iconId) {
       const input = document.getElementById(inputId);
