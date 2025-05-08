@@ -202,63 +202,63 @@ class UserController {
 
 
     static showLoginForm(req, res) {
-        res.render('login', { error: null });
+        res.render('login.ejs', { error: null });
       }
     
+
+
+
       static async loginForm(req, res) {
-        const errs = validationResult(req);
-        if (!errs.isEmpty()) {
-          return res.render('login', { error: 'Please enter a valid email & password.' });
-        }
+       
         try {
           const { email, password } = req.body;
-          
-          const user = await userServices.getUserByEmail(email);
-          if (!user) {
-            return res.render('login', { error: 'No account found. Please sign up.' });
+
+          const result = await userServices.getUserByEmail(email);
+          if (result) {
+            const match = await bcrypt.compare(password, result.password_hash);
+            if (match) {
+              res.render('home.ejs', { title: 'Home' });
+            } else {
+              res.render('login.ejs', { error: 'Incorrect password.' });
+            }
+          } else {
+            res.render('signup.ejs', { error: 'No account found. Please sign up.' });
           }
-          const match = await bcrypt.compare(password, user.password);
-          if (!match) {
-            return res.render('login', { error: 'Incorrect password.' });
-          }
-          req.session.user = { id: user.id, email: user.email, userType: user.userType };
-          return res.redirect('/');
-        } catch (err) {
-          console.error(err);
-          return res.render('login', { error: 'Server error. Please try again.' });
+        } catch (error) {
+          console.error('Error during login:', error);
+        //  res.render('login.ejs', { error: 'Server error. Please try again.' });
+
         }
       }
+
+          
+        
       
       static showSignupForm(req, res) {
-        res.render('signup', { error: null });
+        res.render('signup.ejs', { error: null });
       }
     
       static async signupForm(req, res) {
-        const errs = validationResult(req);
-        if (!errs.isEmpty()) {
-          return res.render('signup', { error: 'Please fill all fields correctly.' });
-        }
+      
+      
+try {
+          const { email, password ,userType  } = req.body;
     
-        try {
-          const { name, email, password, userType } = req.body;
-        
-          if (await userServices.getUserByEmail(email)) {
-            return res.render('signup', { error: 'Email is already registered. Please log in.' });
+          const currentDate = moment().format('YYYY-MM-DD HH:mm:ss');
+
+          const result = await userServices.getUserByEmail(email);
+          if (result) {
+            return res.render('signup.ejs', { error: 'Email is already registered. Please log in.' });
           }
-        
-          const hashed = await bcrypt.hash(password, 10);
-          await userServices.createUser({
-            name,
-            email,
-            password:  hashed,
-            userType,
-            createdAt: moment().format('YYYY-MM-DD')
-          });
+          let user = new User(null, email, password, userType,currentDate);
+          const results = await userServices.createUser(user);
           return res.redirect('/login');
-        } catch (err) {
-          console.error(err);
-          return res.render('signup', { error: 'Registration failed. Please try again.' });
-        }
+
+      }
+    catch (error) {
+          console.error('Error during signup:', error);
+          return res.render('signup.ejs', { error: 'Registration failed. Please try again.' });
+        } 
       }
     
 }

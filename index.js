@@ -7,6 +7,7 @@ const port = process.env.PORT;
 const app = express();
 const bodyParser = require("body-parser");
 
+const authRoutes = require("./routes/authRoutes");
 const userRoutes = require('./routes/userRoutes');
 const instructorRoutes = require('./routes/instructorRoutes');
 const studentRoutes = require('./routes/studentRoutes');
@@ -32,7 +33,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+app.use('/' , authRoutes);
 app.use('/api/users',userRoutes);
 app.use('/api/instuctor',instructorRoutes);
 app.use('/api/student',studentRoutes);

@@ -88,6 +88,8 @@
 
     <%- include('partials/header') %>
 
+    
+
   <!-- MAIN LOGIN CONTENT -->
   <div class="main-content d-flex align-items-center justify-content-center px-3">
     <div class="card bg-white p-4 w-100">
@@ -96,7 +98,7 @@
         <p class="text-secondary">Welcome back! Please sign in below</p>
       </div>
 
-      <form action="/api/users/login" method="POST" novalidate>
+      <form action="/login" method="POST" novalidate>
         <div class="mb-3 position-relative">
           <i class="bi bi-envelope-fill form-icon"></i>
           <input
@@ -136,7 +138,7 @@
 
         <p class="text-center small mt-4 mb-0">
           Don’t have an account?
-          <a href="/api/users/signup" class="text-primary fw-bold">Sign up</a>
+          <a href="/signup" class="text-primary fw-bold">Sign up</a>
         </p>
       </form>
     </div>
