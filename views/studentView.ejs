@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title><%= title %> — LearnOnline</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    .card-hover {
+      transition: transform .2s, box-shadow .2s;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    .badge-pending {
+      background-color: #ffc107;
+      color: #212529;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <%- include('partials/header') %>
+
+  <main class="container py-5">
+    <div class="text-center mb-5">
+      <h1 class="display-5">Welcome back, <%= student.name || student.email %>!</h1>
+      <p class="lead text-muted">Here's your learning at a glance.</p>
+    </div>
+
+    <!-- Enrolled Courses -->
+    <section class="mb-5">
+      <h2 class="h4 mb-4">Your Courses</h2>
+      <% if (courses.length) { %>
+        <div class="row g-4">
+          <% courses.forEach(course => { %>
+            <div class="col-12 col-sm-6 col-lg-4">
+              <div class="card h-100 card-hover shadow-sm">
+                <% if (course.image) { %>
+                  <img src="<%= course.image %>" class="card-img-top" alt="<%= course.courseName %>">
+                <% } %>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title"><%= course.courseName %></h5>
+                  <p class="card-text text-secondary flex-grow-1">
+                    <%= course.shortDescription || course.description.substring(0, 80) + '...' %>
+                  </p>
+                  <a href="/courses/<%= course.id %>" class="btn btn-primary mt-2">Go to Course</a>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p class="text-muted">You have no enrolled courses yet.</p>
+      <% } %>
+    </section>
+
+    <!-- Quizzes -->
+    <section class="mb-5">
+      <h2 class="h4 mb-4">Your Quizzes</h2>
+      <% if (quizzes.length) { %>
+        <ul class="list-group">
+          <% quizzes.forEach(q => { %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <i class="bi bi-question-circle-fill me-2 text-primary"></i>
+                <%= q.title %>
+              </div>
+              <% if (q.completed) { %>
+                <span class="badge bg-success">Completed</span>
+              <% } else { %>
+                <span class="badge badge-pending">Pending</span>
+              <% } %>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-muted">No quizzes assigned yet.</p>
+      <% } %>
+    </section>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

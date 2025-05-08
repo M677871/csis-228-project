@@ -153,5 +153,17 @@ class StudentService {
       throw new Error('Error fetching student courses: ' + error.message);
     }
   }
+
+  static async getStudentQuizzes(id) {
+    try {
+      if (!(await studentRepository.studentExists(id))) {
+        throw new Error(`Student ID: ${id} does not exist`);
+      }
+      const quizzes = await studentRepository.getStudentQuizzes(id);
+      return quizzes;
+    } catch (error) {
+      throw new Error('Error fetching student quizzes: ' + error.message);
+    }
+  }
 }
 module.exports = StudentService;

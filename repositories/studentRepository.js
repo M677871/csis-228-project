@@ -192,6 +192,32 @@ class StudentRepository {
       throw new Error("Error checking if student exists by user ID: " + error.message);
     }
   }
+
+  static async getStudentQuizzes(studentId) {
+    try {
+      const query = `SELECT * FROM quizzes WHERE quiz_id IN
+                           (SELECT quiz_id FROM quiz_results WHERE student_id = ?)`;
+      const result = await db.query(query, [studentId]);
+      return result;                    
+    } catch (error) {
+      console.error("Error in getStudentQuizzes:", error);
+      throw new Error("Error fetching student quizzes: " + error.message);
+    }
+  }
+
+  static async getStudentsQuizzes(studentId) {
+    try {
+      const query = `SELECT * FROM quizzes WHERE quiz_id IN
+                           (SELECT quiz_id FROM quiz_results WHERE student_id = ?)`;
+      const result = await db.query(query, [studentId]);
+      return result;                    
+    } catch (error) {
+      console.error("Error in getStudentQuizzes:", error);
+      throw new Error("Error fetching student quizzes: " + error.message);
+    }
+  }
+  
+
 }
 
 module.exports = StudentRepository;

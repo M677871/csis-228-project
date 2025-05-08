@@ -213,21 +213,16 @@ class UserController {
         try {
           const { email, password } = req.body;
 
-          const result = await userServices.getUserByEmail(email);
+          const result = await userServices.login(email, password);
           if (result) {
-            const match = await bcrypt.compare(password, result.password_hash);
-            if (match) {
-              res.render('home.ejs', { title: 'Home' });
-            } else {
-              res.render('login.ejs', { error: 'Incorrect password.' });
-            }
+            res.render('home.ejs', { title: 'Home' });
           } else {
-            res.render('signup.ejs', { error: 'No account found. Please sign up.' });
+            res.render('login.ejs', { error: 'Incorrect email or password.' });
           }
-        } catch (error) {
+        }
+        catch (error) {
           console.error('Error during login:', error);
-        //  res.render('login.ejs', { error: 'Server error. Please try again.' });
-
+          res.render('login.ejs', { error: 'Server error. Please try again.' });
         }
       }
 

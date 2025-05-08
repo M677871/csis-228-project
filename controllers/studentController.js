@@ -143,6 +143,29 @@ static  async deleteStudent(req, res) {
       return res.status(500).json({ message: error.message });
     }
   }
+
+
+static async loadStudentsView(req, res) {
+  try {
+    const { id } = req.params;
+    const student = await studentService.getStudentById(id);
+    const courses = await studentService.getStudentCourses(id);
+    const quizzes = await studentService.getStudentQuizzes(id);
+
+    return res.render('studentView', {
+      title: 'Student Dashboard',
+      student,
+      courses,
+      quizzes
+    });
+  } catch (error) {
+    console.error('Error fetching student dashboard:', error);
+    return res.status(500).send('Internal Server Error');
+  }
+}
+
+
+
 }
 
 module.exports = StudentController;
