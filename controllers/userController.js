@@ -241,10 +241,7 @@ try {
     
           const currentDate = moment().format('YYYY-MM-DD HH:mm:ss');
 
-          const result = await userServices.getUserByEmail(email);
-          if (result) {
-            return res.render('signup.ejs', { error: 'Email is already registered. Please log in.' });
-          }
+         
           let user = new User(null, email, password, userType,currentDate);
           const results = await userServices.createUser(user);
           return res.redirect('/login');

@@ -23,7 +23,7 @@ router.get("/signup", UserController.showSignupForm);
 router.post(
   "/signup",
   [
-    check("name").notEmpty().withMessage("Name is required"),
+    //check("name").notEmpty().withMessage("Name is required"),
     check("email").isEmail().withMessage("Please enter a valid email"),
     check("password")
       .isLength({ min: 6 })
