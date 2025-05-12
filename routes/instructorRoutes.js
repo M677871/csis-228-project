@@ -5,6 +5,7 @@ const router = express.Router();
 
 
 router.get('/', instructorController.getAllInstructors);
+router.get('/instructorView', instructorController.showInstructorForm);
 router.get('/:id',validateInstructorId, instructorController.getInstructorById);
 router.get('/courses/:id',validateInstructorId,instructorController.getInstructorCourses);
 router.post('/',validateInstructor, instructorController.createInstructor);

@@ -58,7 +58,22 @@ app.get('/' , async (req , res) => {
 });
 
 app.get ('/createCourse' , (req , res) => {
+    try{
     res.render('createCourse.ejs');
+    }catch(e){
+        console.error('Error fetching courses:', error);
+        res.status(500).send('Internal Server Error');  
+    }
+});
+
+app.get('/instructor', (req, res) => {
+    try{
+    res.render('instructorView.ejs');
+    }
+    catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 app.listen(port, () => {

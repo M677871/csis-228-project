@@ -131,5 +131,14 @@ class InstructorController {
       }
     
 }
+
+static async showInstructorForm(req, res) {
+    try {
+        res.render('instructorView.ejs');
+    } catch (error) {
+        console.error('Error fetching instructor form:', error);
+        res.status(500).send('Internal Server Error');
+    }
+  }
 }
 module.exports = InstructorController;
