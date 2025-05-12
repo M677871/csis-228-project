@@ -252,6 +252,15 @@ try {
           return res.render('signup.ejs', { error: 'Registration failed. Please try again.' });
         } 
       }
+
+
+      
+      static async loadUsersView(req, res){
+
+        const users = await userServices.getAllUsers();
+        res.render('users', {users: users, message: 'Welcome to LearnOnline'});
+        
+    }
     
 }
 module.exports = UserController;

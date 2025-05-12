@@ -57,6 +57,10 @@ app.get('/' , async (req , res) => {
     }
 });
 
+app.get ('/createCourse' , (req , res) => {
+    res.render('createCourse.ejs');
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

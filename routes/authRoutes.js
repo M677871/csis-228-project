@@ -5,7 +5,6 @@ const UserController = require("../controllers/userController");
 
 const router = express.Router();
 
-
 router.get("/login", UserController.showLoginForm);
 
 router.post(
@@ -16,7 +15,6 @@ router.post(
   ],
   UserController.loginForm
 );
-
 
 router.get("/signup", UserController.showSignupForm);
 

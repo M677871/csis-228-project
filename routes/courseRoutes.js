@@ -5,6 +5,11 @@ const router = express.Router();
 
 
 router.get('/view-courses' , courseController.loadCoursesView);
+router.get('/create-course' , courseController.showCourseForm);
+router.post ('/create-course' , courseController.createCourseForm);
+
+
+
 router.get('/instructorByCourseId/:id', courseController.getInstructorByCourseId);
 router.get('/stdOfCourse/:id',courseController.getStudentsOfCourse);
 router.get('/', courseController.getAllCourses);

@@ -193,6 +193,42 @@ class CourseController {
     }
   }
 
+
+static showCourseForm(req, res) {
+  try {
+    
+  res.render("createCourse.ejs", { error: null });
+  }
+  catch (error) {
+    console.error("Error rendering course form:", error);
+    return res.status(500).send("Internal Server Error");
+  }
+}
+
+static async createCourseForm(req, res) {
+  try {
+    const { instructorId, categorieId, courseName, description } = req.body;
+
+    let course = new Course(
+      0,
+      instructorId,
+      categorieId,
+      courseName,
+      description,
+      moment().format("YYYY-MM-DD ")
+    );
+    const result = await courseService.createCourse(course);
+    
+    return res.redirect("/api/course/view-courses");
+  } catch (error) {
+    console.error("Error during course creation:", error);
+    return res.render("createCourse.ejs", {
+      error: "Course creation failed. Please try again.",
+    });
+  }
+}
+
+
 }
 
 module.exports = CourseController;
