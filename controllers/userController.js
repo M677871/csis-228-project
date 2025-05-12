@@ -244,7 +244,7 @@ try {
          
           let user = new User(null, email, password, userType,currentDate);
           const results = await userServices.createUser(user);
-          return res.redirect('/login');
+          return res.redirect('/login' );
 
       }
     catch (error) {
@@ -254,7 +254,7 @@ try {
       }
 
 
-      
+
       static async loadUsersView(req, res){
 
         const users = await userServices.getAllUsers();
