@@ -164,6 +164,15 @@ static async loadStudentsView(req, res) {
   }
 }
 
+static async showStudentForm(req, res) {
+  try {
+      res.render('studentView.ejs');
+  } catch (error) {
+      console.error('Error fetching instructor form:', error);
+      res.status(500).send('Internal Server Error');
+  }
+}
+
 
 
 }

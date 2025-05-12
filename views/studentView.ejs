@@ -1,91 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title><%= title %> — LearnOnline</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
-  <style>
-    .card-hover {
-      transition: transform .2s, box-shadow .2s;
-    }
-    .card-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-    }
-    .badge-pending {
-      background-color: #ffc107;
-      color: #212529;
-    }
-  </style>
-</head>
-<body class="bg-light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Student Dashboard — LearnOnline</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #2563eb;
+        --secondary-color: #4f46e5;
+        --accent-color: #7c3aed;
+      }
 
+      body {
+        background-color: #f8fafc;
+        min-height: 100vh;
+        font-family: "Segoe UI", system-ui, sans-serif;
+      }
+
+      .card {
+        border-radius: 1.25rem;
+        border: none;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        background: linear-gradient(145deg, #ffffff, #f8fafc);
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      }
+
+      .auth-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        border: none;
+        border-radius: 0.75rem;
+        padding: 1rem 2rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        letter-spacing: 0.5px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+
+      .auth-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+      }
+
+      .form-control,
+      .form-select {
+        border-radius: 0.75rem;
+        padding: 1rem 1.5rem;
+        border: 2px solid #e2e8f0;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .alert {
+        border-radius: 0.75rem;
+        border: none;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      }
+
+      .welcome-message {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--accent-color)
+  );
+  /* Standard property */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  font-weight: 700;
+  
+  /* Animation effects */
+  animation: gradient-shift 5s ease infinite;
+  background-size: 200% 200%;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Hover effects */
+.welcome-message:hover {
+  transform: scale(1.02);
+  cursor: default;
+}
+
+      .action-buttons .col-md-4 {
+        transition: transform 0.3s ease;
+      }
+
+      .action-buttons .col-md-4:hover {
+        transform: scale(1.02);
+      }
+
+      .bi {
+        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.05));
+      }
+    </style>
+  </head>
+<body>
   <%- include('partials/header') %>
 
-  <main class="container py-5">
-    <div class="text-center mb-5">
-      <h1 class="display-5">Welcome back, <%= student.name || student.email %>!</h1>
-      <p class="lead text-muted">Here's your learning at a glance.</p>
+  <div class="container py-5">
+    <!-- Action Buttons -->
+    <div class="row mb-4 g-4 action-buttons">
+      <div class="col-md-4">
+        <a href="/api/course/view-courses" class="btn auth-btn text-white">
+          <i class="bi bi-search fs-5"></i>
+          Browse Courses
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/my-courses" class="btn auth-btn text-white">
+          <i class="bi bi-journal-bookmark fs-5"></i>
+          My Courses
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/quizzes" class="btn auth-btn text-white">
+          <i class="bi bi-pencil-square fs-5"></i>
+          My Quizzes
+        </a>
+      </div>
     </div>
 
-    <!-- Enrolled Courses -->
-    <section class="mb-5">
-      <h2 class="h4 mb-4">Your Courses</h2>
-      <% if (courses.length) { %>
-        <div class="row g-4">
-          <% courses.forEach(course => { %>
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="card h-100 card-hover shadow-sm">
-                <% if (course.image) { %>
-                  <img src="<%= course.image %>" class="card-img-top" alt="<%= course.courseName %>">
-                <% } %>
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title"><%= course.courseName %></h5>
-                  <p class="card-text text-secondary flex-grow-1">
-                    <%= course.shortDescription || course.description.substring(0, 80) + '...' %>
-                  </p>
-                  <a href="/courses/<%= course.id %>" class="btn btn-primary mt-2">Go to Course</a>
-                </div>
-              </div>
-            </div>
-          <% }) %>
+    <!-- Dynamic Content Section -->
+    <div class="card bg-white p-4">
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+          <i class="bi bi-exclamation-octagon me-2"></i>
+          <%= error %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-      <% } else { %>
-        <p class="text-muted">You have no enrolled courses yet.</p>
       <% } %>
-    </section>
+      <% if (typeof success !== 'undefined' && success) { %>
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+          <i class="bi bi-check-circle me-2"></i>
+          <%= success %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% } %>
 
-    <!-- Quizzes -->
-    <section class="mb-5">
-      <h2 class="h4 mb-4">Your Quizzes</h2>
-      <% if (quizzes.length) { %>
-        <ul class="list-group">
-          <% quizzes.forEach(q => { %>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <i class="bi bi-question-circle-fill me-2 text-primary"></i>
-                <%= q.title %>
-              </div>
-              <% if (q.completed) { %>
-                <span class="badge bg-success">Completed</span>
-              <% } else { %>
-                <span class="badge badge-pending">Pending</span>
-              <% } %>
-            </li>
-          <% }) %>
-        </ul>
+      <% if (typeof currentView !== 'undefined') { %>
+        <%- include(currentView) %>
       <% } else { %>
-        <p class="text-muted">No quizzes assigned yet.</p>
+        <div class="text-center py-5">
+          <h4 class="welcome-message mb-4 display-5">📚 Start Your Learning Journey</h4>
+          <p class="text-secondary fs-5">Choose an action to continue your educational adventure</p>
+        </div>
       <% } %>
-    </section>
-  </main>
+    </div>
+  </div>
 
   <%- include('partials/footer') %>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      
+      function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        icon.style.transform = "scale(1.2)";
+        setTimeout(() => (icon.style.transform = "scale(1)"), 200);
+
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.replace("bi-eye-fill", "bi-eye-slash-fill");
+        } else {
+          input.type = "password";
+          icon.classList.replace("bi-eye-slash-fill", "bi-eye-fill");
+        }
+      }
+    </script>
 </body>
 </html>
