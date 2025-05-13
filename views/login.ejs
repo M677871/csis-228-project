@@ -14,6 +14,7 @@
     rel="stylesheet"
   />
   <style>
+    /* Original CSS preserved */
     body {
       background-color: #e7ecf4;
       min-height: 100vh;
@@ -85,10 +86,7 @@
   </style>
 </head>
 <body>
-
-    <%- include('partials/header') %>
-
-    
+  <%- include('partials/header') %>
 
   <!-- MAIN LOGIN CONTENT -->
   <div class="main-content d-flex align-items-center justify-content-center px-3">
@@ -97,6 +95,13 @@
         <h2 class="brand-text mb-1">📚 LearnOnline</h2>
         <p class="text-secondary">Welcome back! Please sign in below</p>
       </div>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <%= error %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% } %>
 
       <form action="/login" method="POST" novalidate>
         <div class="mb-3 position-relative">
@@ -107,6 +112,7 @@
             class="form-control form-input py-2"
             placeholder="you@example.com"
             required
+            value="<%= typeof email !== 'undefined' ? email : '' %>"
           />
         </div>
         <div class="mb-4 position-relative">
@@ -149,7 +155,7 @@
   <script>
     function togglePassword(inputId, iconId) {
       const input = document.getElementById(inputId);
-      const icon  = document.getElementById(iconId);
+      const icon = document.getElementById(iconId);
       if (input.type === 'password') {
         input.type = 'text';
         icon.classList.replace('bi-eye-fill','bi-eye-slash-fill');
