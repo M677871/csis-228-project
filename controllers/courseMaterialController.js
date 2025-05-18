@@ -131,6 +131,43 @@ class CourseMaterialController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  static showMaterialForm(req, res) {
+    try {
+      
+    res.render("courseMaterial.ejs", { error: null });
+    }
+    catch (error) {
+      console.error("Error rendering material form:", error);
+      return res.status(500).send("Internal Server Error");
+    }
+  } 
+
+
+  static async createMaterialForm(req, res) {
+    try {
+      const { courseId, title, materialType, filePath } = req.body;
+      
+      let material = new CourseMaterial(
+        0,
+        courseId,
+        title,
+        materialType,
+        filePath,
+        moment().format("YYYY-MM-DD")
+      );
+    
+      const newCourseMaterial =
+        await courseMaterialService.createCourseMaterial(material);
+      
+      return res.redirect("/instructor");
+    } catch (error) {
+      console.error("Error during material creation:", error);
+      return res.render("courseMaterial.ejs", {
+        error: "Material course creation failed. Please try again.",
+      });
+    }
+  }
 }
 
 module.exports =  CourseMaterialController;

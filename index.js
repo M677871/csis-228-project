@@ -124,6 +124,16 @@ app.get('/enrollement', (req, res) => {
     }
 });
 
+app.get('/material', (req, res) => {
+    try{
+    res.render('courseMaterial.ejs');
+    }
+    catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

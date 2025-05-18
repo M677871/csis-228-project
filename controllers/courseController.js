@@ -219,7 +219,7 @@ static async createCourseForm(req, res) {
     );
     const result = await courseService.createCourse(course);
     
-    return res.redirect("/api/course/view-courses");
+    return res.redirect("/api/material/create-material");
   } catch (error) {
     console.error("Error during course creation:", error);
     return res.render("createCourse.ejs", {

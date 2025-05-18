@@ -4,6 +4,9 @@ const {validateMaterial, validateMaterialId} = require('../validators/material.d
 const router = express.Router();
 
 
+router.get('/create-material' , courseMaterialController.showMaterialForm);
+router.post ('/create-material' , courseMaterialController.createMaterialForm);
+
 router.get('/', courseMaterialController.getAllCourseMaterials);
 router.get('/:id',validateMaterialId, courseMaterialController.getCourseMaterialById);
 router.post('/',validateMaterial, courseMaterialController.createCourseMaterial);
