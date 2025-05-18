@@ -148,7 +148,7 @@ class QuizController {
             let quiz = new Quiz(0, courseId, quizName, quizDescription, moment().format('YYYY-MM-DD'));
             const newQuiz = await quizService.createQuiz(quiz);
           
-          return res.redirect("/api/material/create-material");
+          return res.redirect("/api/question/create-question");
         } catch (error) {
           console.error("Error during course creation:", error);
           return res.render("createCourse.ejs", {

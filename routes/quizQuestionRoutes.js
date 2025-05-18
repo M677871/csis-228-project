@@ -5,6 +5,9 @@ const {validateQuestion, validateQuestionId} = require('../validators/question.d
 const router = express.Router();
 
 
+router.get('/create-question' , quizQuestionController.showQuestionForm);
+router.post ('/create-question' , quizQuestionController.createQuestionForm);
+
 router.get('/', quizQuestionController.getAllQuestions);
 router.get('/:id',validateQuestionId, quizQuestionController.getQuestionById);
 router.post('/', validateQuestion,quizQuestionController.createQuestion);

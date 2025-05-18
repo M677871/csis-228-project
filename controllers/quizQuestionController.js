@@ -117,6 +117,42 @@ class QuizQuestionController {
       res.status(500).json({ message: error.message });
     }
   }
+ 
+      static showQuestionForm(req, res) {
+        try {
+          
+        res.render("createQuizQuestion.ejs", { error: null });
+        }
+        catch (error) {
+          console.error("Error rendering course form:", error);
+          return res.status(500).send("Internal Server Error");
+        }
+      } 
+
+
+      static async createQuestionForm(req, res) {
+        try {
+          const { quizId, questionText } = req.body;
+          const newQuestion = new Question(
+            0,
+           
+            quizId,
+            questionText,
+            moment().format("YYYY-MM-DD")
+          );
+          const savedQuestion = await quizQuestionService.createQuizQuestion(
+            newQuestion
+          );
+          
+          return res.redirect("/api/answer/create-answer");
+        } catch (error) {
+          console.error("Error during course creation:", error);
+          return res.render("createQuizQuestion.ejs", {
+            error: "Course creation failed. Please try again.",
+          });
+        }
+      }
+
 }
 
 module.exports = QuizQuestionController;

@@ -94,10 +94,21 @@ app.get('/quiz', (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+app.get('/question', (req, res) => {
+    try{
+    res.render('createQuizQuestion.ejs');
+    }
+    catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+
 
 /*
     const db = require('./config/db');
