@@ -104,9 +104,31 @@ app.get('/question', (req, res) => {
     }
 });
 
+app.get('/answer', (req, res) => {
+    try{
+    res.render('createQuizAnswer.ejs');
+    }
+    catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.get('/enrollement', (req, res) => {
+    try{
+    res.render('createEnrollement.ejs');
+    }
+    catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+
 
 
 

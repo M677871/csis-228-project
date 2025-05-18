@@ -4,6 +4,9 @@ const {validateAnswer, validateAnswerId} = require('../validators/answer.dto');
 
 const router = express.Router();
 
+router.get('/create-answer' , quizAnswerController.showAnswerForm);
+router.post ('/create-answer' , quizAnswerController.createAnswersForm);
+
 router.get('/', quizAnswerController.getAllAnswers);
 router.get('/:id',validateAnswerId, quizAnswerController.getAnswerById);
 router.post('/',validateAnswer, quizAnswerController.createAnswer);

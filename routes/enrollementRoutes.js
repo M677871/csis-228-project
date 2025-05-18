@@ -3,6 +3,9 @@ const enrollmentController = require('../controllers/enrollementController');
 const {validateEnrollement, validateEnrollementId} = require('../validators/enrollement.dto');
 const router = express.Router();
 
+router.get('/create-enrollment' , enrollmentController.showEnrollementForm);
+router.post ('/create-enrollment' , enrollmentController.createEnrollementForm);
+
 router.get('/', enrollmentController.getEnrollements);
 router.get('/:id',validateEnrollementId, enrollmentController.getEnrollementById);
 router.post('/',validateEnrollement, enrollmentController.createEnrollement);

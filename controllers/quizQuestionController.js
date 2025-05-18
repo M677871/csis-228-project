@@ -146,9 +146,9 @@ class QuizQuestionController {
           
           return res.redirect("/api/answer/create-answer");
         } catch (error) {
-          console.error("Error during course creation:", error);
+          console.error("Error during question creation:", error);
           return res.render("createQuizQuestion.ejs", {
-            error: "Course creation failed. Please try again.",
+            error: "question creation failed. Please try again.",
           });
         }
       }

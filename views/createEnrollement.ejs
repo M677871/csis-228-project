@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Create Answer — LearnOnline</title>
+  <title>Enroll in Course — LearnOnline</title>
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
     rel="stylesheet"
@@ -14,7 +14,7 @@
     rel="stylesheet"
   />
   <style>
-   
+    /* Consistent styling with previous forms */
     body { background-color: #e7ecf4; min-height: 100vh; }
     .card {
       border-radius: 1rem;
@@ -42,8 +42,6 @@
       background-color: #0b5ed7;
       border-color: #0a58ca;
     }
-    /* Custom checkbox alignment */
-    .form-check-input { margin-left: 0.5rem; }
   </style>
 </head>
 <%- include('partials/header') %>
@@ -51,8 +49,8 @@
   <div class="d-flex align-items-center justify-content-center vh-100 px-3">
     <div class="card bg-white p-4 w-100">
       <div class="text-center mb-4">
-        <h2 class="text-primary mb-1">✅ Add Quiz Answer</h2>
-        <p class="text-secondary">Define possible answers for your question</p>
+        <h2 class="text-primary mb-1">📚 Course Enrollment</h2>
+        <p class="text-secondary">Join a new learning journey</p>
         <% if (typeof error !== 'undefined' && error) { %>
           <div class="alert alert-danger" role="alert">
             <%= error %>
@@ -60,60 +58,43 @@
         <% } %>
       </div>
 
-      <form action="/api/answer/create-answer" method="POST">
-        <!-- Question ID -->
+      <form action="/api/enrollement/create-enrollement " method="POST">
+        <!-- Student ID -->
         <div class="mb-3 position-relative">
-          <i class="bi bi-question-circle form-icon"></i>
+          <i class="bi bi-person-badge form-icon"></i>
           <input
             type="number"
-            name="questionId"
+            name="studentId"
             class="form-control form-input py-2"
-            placeholder="Question ID"
+            placeholder="Student ID"
             required
           />
         </div>
 
-        <!-- Answer Text -->
+        <!-- Course ID -->
         <div class="mb-3 position-relative">
-          <i class="bi bi-chat-text form-icon"></i>
-          <textarea
-            name="answerText"
+          <i class="bi bi-journal-bookmark form-icon"></i>
+          <input
+            type="number"
+            name="courseId"
             class="form-control form-input py-2"
-            placeholder="Answer Text"
-            rows="3"
+            placeholder="Course ID"
             required
-          ></textarea>
+          />
         </div>
 
-        <!-- Answer Type -->
+        <!-- Enrollment Status -->
         <div class="mb-3 position-relative">
-          <i class="bi bi-list-ul form-icon"></i>
-          <select name="answerType" class="form-select form-input py-2" required>
-            <option value="" disabled selected>Select Answer Type</option>
-            <option value="multiple_choice">Multiple Choice</option>
-            <option value="true_false">True/False</option>
-            <option value="short_answer">Short Answer</option>
+          <i class="bi bi-list-check form-icon"></i>
+          <select name="status" class="form-select form-input py-2" required>
+            <option value="" disabled selected>Select Status</option>
+            <option value="pending">Pending</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
           </select>
         </div>
 
-        <!-- Is Correct -->
-        <div class="mb-3 position-relative">
-          <i class="bi bi-check-circle form-icon"></i>
-          <div class="form-check ps-5">
-            <input
-              type="checkbox"
-              name="isCorrect"
-              class="form-check-input"
-              id="isCorrect"
-              value="true"
-            >
-            <label class="form-check-label" for="isCorrect">
-              Mark as Correct Answer
-            </label>
-          </div>
-        </div>
-
-        <button type="submit" class="btn auth-btn text-white w-100">Create Answer</button>
+        <button type="submit" class="btn auth-btn text-white w-100">Enroll Now</button>
       </form>
     </div>
   </div>

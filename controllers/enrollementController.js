@@ -124,6 +124,41 @@ class EnrollementController {
       return res.status(500).json({ message: error.message });
     }
   }
+
+
+  static showEnrollementForm(req, res) {
+    try {
+      
+    res.render("createEnrollement.ejs", { error: null });
+    }
+    catch (error) {
+      console.error("Error rendering course form:", error);
+      return res.status(500).send("Internal Server Error");
+    }
+  } 
+
+
+  static async createEnrollementForm(req, res) {
+    try {
+      const { studentId, courseId, status } = req.body;
+     
+      let enrollement = new Enrollement(
+        0,
+        studentId,
+        courseId,
+        status,
+        moment().format("YYYY-MM-DD")
+      );
+      const result = await enrollementService.createEnrollement(enrollement);
+      
+      return res.redirect("/student");
+    } catch (error) {
+      console.error("Error during Enrolement creation:", error);
+      return res.render("createEnrollement.ejs", {
+        error: "Enrollement creation failed. Please try again.",
+      });
+    }
+  }
 }
 
 module.exports = EnrollementController;

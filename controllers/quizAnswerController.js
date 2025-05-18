@@ -103,6 +103,32 @@ class QuizAnswerController {
             res.status(500).json({ message: error.message });
         }
     }
+
+    static showAnswerForm(req, res) {
+        try {
+          
+        res.render("createQuizAnswer.ejs", { error: null });
+        }
+        catch (error) {
+          console.error("Error rendering course form:", error);
+          return res.status(500).send("Internal Server Error");
+        }
+      } 
+
+
+      static async createAnswersForm(req, res) {
+        try {
+            const {questionId, answerText,answerType, isCorrect} =req.body;
+            const newAnswer = new Answer(0,questionId, answerText,answerType, isCorrect);
+            const savedAnswer = await quizAnswerService.createQuizAnswer(newAnswer);
+          return res.redirect("/instructor");
+        } catch (error) {
+          console.error("Error during answer creation:", error);
+          return res.render("createQuizAnswer.ejs", {
+            error: "answer creation failed. Please try again.",
+          });
+        }
+      }
 }
 
 module.exports = QuizAnswerController;
