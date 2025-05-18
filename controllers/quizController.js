@@ -107,6 +107,55 @@ class QuizController {
             res.status(500).json({ message: error.message });
         }
     }
+/*
+    static async loadquizzesView(req, res) {
+        try {
+          
+          const cats = await categoryService.getAllCategories();
+    
+          
+          const categories = [];
+          for (const cat of cats) {
+            const courses = await categoryService.getCategoryCourses(cat.categoryId);
+            if (courses.length) {
+              categories.push({ category: cat, courses });
+            }
+          }
+    
+          return res.render('courses', { categories });
+        } catch (error) {
+          console.error("Error fetching category courses:", error);
+          return res.status(500).send("Internal Server Error");
+        }
+      }
+*/
+    static showQuizzForm(req, res) {
+        try {
+          
+        res.render("createQuizz.ejs", { error: null });
+        }
+        catch (error) {
+          console.error("Error rendering course form:", error);
+          return res.status(500).send("Internal Server Error");
+        }
+      }
+      
+      static async createQuizzForm(req, res) {
+        try {
+            const{courseId, quizName, quizDescription} = req.body;
+           
+
+            let quiz = new Quiz(0, courseId, quizName, quizDescription, moment().format('YYYY-MM-DD'));
+            const newQuiz = await quizService.createQuiz(quiz);
+          
+          return res.redirect("/api/material/create-material");
+        } catch (error) {
+          console.error("Error during course creation:", error);
+          return res.render("createCourse.ejs", {
+            error: "Course creation failed. Please try again.",
+          });
+        }
+      }
 }
 
 module.exports = QuizController;

@@ -85,6 +85,16 @@ app.get('/student', (req, res) => {
     }
 });
 
+app.get('/quiz', (req, res) => {
+    try{
+    res.render('createQuizz.ejs');
+    }
+    catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

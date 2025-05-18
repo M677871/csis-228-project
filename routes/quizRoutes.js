@@ -4,6 +4,11 @@ const {validateQuiz, validateQuizId} = require('../validators/quiz.dto');
 
 const router = express.Router();
 
+
+
+router.get('/create-quizz' , quizController.showQuizzForm);
+router.post ('/create-quizz' , quizController.createQuizzForm);
+
 router.get('/', quizController.getAllQuizzes);
 router.get('/:id', validateQuizId, quizController.getQuizById);
 router.post('/', validateQuiz, quizController.createQuiz);
