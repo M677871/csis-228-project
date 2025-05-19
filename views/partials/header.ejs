@@ -1,19 +1,72 @@
 <div class="container">
-  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+  <header class="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom border-2 border-primary-subtle">
     <div class="col-md-3 mb-2 mb-md-0">
-      <a href="/" class="d-inline-flex align-items-center text-decoration-none text-dark fs-4 fw-bold">
-        📚 LearnOnline
+      <a href="/" class="d-inline-flex align-items-center text-decoration-none">
+        <span class="fs-3 text-primary me-2">📚</span>
+        <span class="fs-4 fw-bold text-primary">LearnOnline</span>
       </a>
     </div>
 
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      <li><a href="/" class="nav-link px-2 ">Home</a></li>
-      <li><a href="/api/course/view-courses" class="nav-link px-2">Courses</a></li>
+    <ul class="nav col-12 col-md-auto mb-2 mb-md-0 justify-content-center">
+      <li class="nav-item">
+        <a href="/" 
+           class="nav-link px-3 text-dark fw-medium position-relative hover-underline">
+          Home
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="/api/course/view-courses" 
+           class="nav-link px-3 text-dark fw-medium position-relative hover-underline">
+          Courses
+        </a>
+      </li>
     </ul>
 
     <div class="col-md-3 text-end">
-      <a href="/login" class="btn btn-outline-primary me-2">Login</a>
-      <a href="/signup" class="btn btn-primary">Sign‑up</a>
+      <a href="/login" 
+         class="btn btn-outline-primary rounded-pill px-4 me-2 fw-medium">
+        Login
+      </a>
+      <a href="/signup" 
+         class="btn btn-primary rounded-pill px-4 fw-medium">
+        Sign Up
+      </a>
     </div>
   </header>
 </div>
+
+<style>
+  /* Consistent with existing forms */
+  .hover-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #0d6efd;
+    transition: width 0.3s ease;
+  }
+  
+  .hover-underline:hover::after {
+    width: 100%;
+  }
+  
+  .nav-link {
+    transition: color 0.2s ease;
+  }
+  
+  .nav-link:hover {
+    color: #0d6efd !important;
+  }
+  
+  .btn-outline-primary {
+    border-color: #0d6efd;
+    color: #0d6efd;
+  }
+  
+  .btn-outline-primary:hover {
+    background: #0d6efd;
+    color: white;
+  }
+</style>
