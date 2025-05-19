@@ -219,7 +219,7 @@ class UserController {
       }
     } catch (error) {
       console.error("Error during login:", error);
-      res.render("login.ejs", { error: "Server error. Please try again." });
+      res.render("login.ejs", { error: "Login error. Incorrect email or password." });
     }
   }
 
