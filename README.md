@@ -13,12 +13,15 @@ Ensure you have the following installed:
 ```
 /project-root
 │── /config                 # Configuration files
+│── /public                 # public files
 │── /models                 # ORM/ODM models
 │── /repositories           # Database access layer
 │── /services               # Business logic
 │── /controllers            # Request handlers
 │── /validators             # Request validation logic
 │── /routes                 # API route definitions
+│── /views                  # Template files            
+│   │   ├── partials/     # Reusable components
 │── /utils                  # Helper functions
 │── .env                    # Environment variables
 │── .gitignore              # Git ignored files
@@ -33,8 +36,11 @@ Ensure you have the following installed:
 1. **Clone the repository**
     ```sh
     git clone https://github.com/M677871/csis-228-project.git
-    cd csis-228-project
+   
     ```
+    ```sh
+     cd csis-228-project
+     ```
 
 2. **Install dependencies**
     ```sh
