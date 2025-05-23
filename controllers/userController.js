@@ -197,23 +197,18 @@ class UserController {
   }
 
 
- 
-  static async loadUsersView(req, res) {
+
+  static async loadUsersViewww(req, res) {
     try {
       const users = await userServices.getAllUsers();
-      
-      
-      //const safeUsers = Array.isArray(users) ? users : [];
- 
-      res.render("users", { 
-        users : users,
-        message: "User Management"
-      });
+      res.render('users', {users: users, message: "User Management" });
+        
+     
     } catch (error) {
       console.error("Error loading users view:", error);
       res.render("users.ejs", {
         errorMessage: "Failed to load users. Please try again later.",
-        users: []
+        users: [],
       });
     }
   }
@@ -241,7 +236,9 @@ class UserController {
       }
     } catch (error) {
       console.error("Error during login:", error);
-      res.render("login.ejs", { error: "Login error. Incorrect email or password." });
+      res.render("login.ejs", {
+        error: "Login error. Incorrect email or password.",
+      });
     }
   }
 
@@ -272,91 +269,77 @@ class UserController {
 
   static async changePasswordForm(req, res) {
     try {
-     
-        const { email, currentPassword, newPassword } = req.body;
-  
-        const user = await userServices.getUserByEmail(email);
-        
-        const result = await userServices.changePassword(
-          email,
-          currentPassword,
-          newPassword
-        );
-        if (result) {
-          return res.redirect("/login");
-        } else {
-          return res.render("changePassword.ejs", {
-            error: "Incorrect email or password."
-          });
-        }
-     
-      
+      const { email, currentPassword, newPassword } = req.body;
+
+      const user = await userServices.getUserByEmail(email);
+
+      const result = await userServices.changePassword(
+        email,
+        currentPassword,
+        newPassword
+      );
+      if (result) {
+        return res.redirect("/login");
+      } else {
+        return res.render("changePassword.ejs", {
+          error: "Incorrect email or password.",
+        });
+      }
     } catch (error) {
       console.error("Error during changing password:", error);
       return res.render("changePassword.ejs", {
         error: "changing password failed. Please try again.",
       });
     }
-  
+  }
 
- 
-}
+  static async loadUserForm(req, res) {
+    try {
+      const { id } = req.params;
+      const user = await userServices.getUserById(id);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+      res.render("editUsers.ejs", { user, errorMessage: null });
+    } catch (error) {
+      console.error("Error in loadUserForm:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
 
+  static async updateUser(req, res) {
+    try {
+      const { id } = req.params;
+      const { email, password, userType } = req.body;
+      const currentDate = moment().format("YYYY-MM-DD");
 
+      let user = new User(id, email, password, userType, currentDate);
+      const results = await userServices.updateUser(user);
+      if (results) {
+        return res.redirect("/users");
+      } else {
+        return res.status(500).json({ message: "Failed to update user" });
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+      return res.status(500).json({ message: error.message });
+    }
+  }
 
-static async loadUserForm(req, res) {
-  try {
+  static async deleteUserr(req, res) {
     const { id } = req.params;
-    const user = await userServices.getUserById(id);
-    if (!user) {
-      return res.status(404).send("User not found");
+    try {
+      const result = await userServices.deleteUser(id);
+      if (result) {
+        return res.redirect("/users");
+      } else {
+        return res.status(500).json({ message: "Failed to delete user" });
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      return res.status(500).json({ message: error.message });
     }
-    res.render('editUsers.ejs', { user, errorMessage: null });
-  } catch (error) {
-    console.error('Error in loadUserForm:', error);
-    res.status(500).send('Internal Server Error');
   }
-}
-
-
-static async updateUser(req, res){
-  try {
-  const {id} = req.params;
-  const { email, password, userType } = req.body;
-  const currentDate = moment().format("YYYY-MM-DD");
-
-  let user = new User(id, email, password, userType, currentDate);
-  const results = await userServices.updateUser(user);
-  if (results) {
-    return res.redirect('/users');
-  } else {
-    return res.status(500).json({ message: "Failed to update user" });
-  }
-} catch (error) {
-  console.error("Error updating user:", error);
-  return res.status(500).json({ message: error.message });
-}
-
-  
-  
-}
-
-static async deleteUserr(req, res){
-  const {id} = req.params;
-  try {
-    const result = await userServices.deleteUser(id);
-    if (result) {
-      return res.redirect('/users');
-    } else {
-      return res.status(500).json({ message: "Failed to delete user" });
-    }
-  } catch (error) {
-    console.error("Error deleting user:", error);
-    return res.status(500).json({ message: error.message });
-  }
-
-}
-
 
   static async loadUserView(req, res) {
     try {
@@ -368,6 +351,5 @@ static async deleteUserr(req, res){
       res.status(500).json({ message: error.message });
     }
   }
-
 }
 module.exports = UserController;

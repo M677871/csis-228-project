@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 
-router.get ('/view-users', userController.loadUsersView);
+router.get ('/view-users', userController.loadUsersViewww);
 router.get ('/view-users/:id', userController.loadUserView);
 
 router.get( '/login',  userController.showLoginForm);
