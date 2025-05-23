@@ -1,29 +1,54 @@
-body {
-    background-color: #e7ecf4;
+/* style.css */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #4f46e5;
+    --accent-color: #7c3aed;
+  }
+  
+  body {
+    background-color: #f8fafc;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    font-family: "Segoe UI", system-ui, sans-serif;
   }
+  
   .main-content {
     flex: 1;
   }
+  
+  /* Card Styles */
   .card {
-    border-radius: 1rem;
+    border-radius: 1.25rem;
     border: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
     max-width: 400px;
   }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form Elements */
   .form-icon {
     position: absolute;
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
     color: #6c757d;
+    z-index: 2; /* Ensure icon stays above input */
   }
+  
   .form-input {
     padding-left: 2.5rem;
     border-radius: 0.5rem;
   }
+  
   .toggle-password {
     position: absolute;
     right: 12px;
@@ -33,13 +58,83 @@ body {
     border: none;
     color: #6c757d;
     cursor: pointer;
+    z-index: 2;
   }
+  
+  .form-control,
+  .form-select {
+    border-radius: 0.75rem;
+    padding: 1rem 1.5rem;
+    border: 2px solid #e2e8f0;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .form-control:focus,
+  .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  
+  /* Buttons */
   .auth-btn {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-    border-radius: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 0.75rem;
+    padding: 1rem 2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
   }
+  
   .auth-btn:hover {
-    background-color: #0b5ed7;
-    border-color: #0a58ca;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  }
+  
+  /* Welcome Message Animation */
+  .welcome-message {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 700;
+    animation: gradient-shift 5s ease infinite;
+    background-size: 200% 200%;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .welcome-message:hover {
+    transform: scale(1.02);
+    cursor: default;
+  }
+  
+  /* Miscellaneous */
+  .alert {
+    border-radius: 0.75rem;
+    border: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  }
+  
+  .action-buttons .col-md-4 {
+    transition: transform 0.3s ease;
+  }
+  
+  .action-buttons .col-md-4:hover {
+    transform: scale(1.02);
+  }
+  
+  .bi {
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.05));
   }
