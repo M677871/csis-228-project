@@ -109,7 +109,7 @@ app.get('/answer', (req, res) => {
     res.render('createQuizAnswer.ejs');
     }
     catch (error) {
-        console.error('Error fetching courses:', error);
+        console.error('Error in answer:', error);
         res.status(500).send('Internal Server Error');
     }
 });
@@ -119,7 +119,7 @@ app.get('/enrollement', (req, res) => {
     res.render('createEnrollement.ejs');
     }
     catch (error) {
-        console.error('Error fetching courses:', error);
+        console.error('Error in erollement:', error);
         res.status(500).send('Internal Server Error');
     }
 });
@@ -129,7 +129,7 @@ app.get('/material', (req, res) => {
     res.render('courseMaterial.ejs');
     }
     catch (error) {
-        console.error('Error fetching courses:', error);
+        console.error('Error fetching material:', error);
         res.status(500).send('Internal Server Error');
     }
 });
@@ -138,7 +138,7 @@ app.get('/admin', (req, res) => {
     res.render('adminView.ejs');
     }
     catch (error) {
-        console.error('Error fetching courses:', error);
+        console.error('Error fetching admin:', error);
         res.status(500).send('Internal Server Error');
     }
 });
@@ -147,8 +147,18 @@ app.get ('/users' , (req , res) => {
     try{
     res.render('users.ejs');
     }catch(e){
-        console.error('Error fetching courses:', error);
+        console.error('Error in getting users :', error);
         res.status(500).send('Internal Server Error');  
+    }
+});
+
+app.get('/changePassword', (req, res) => {
+    try{
+    res.render('changePassword.ejs');
+    }
+    catch (error) {
+        console.error('Error changing pass:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 

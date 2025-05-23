@@ -202,11 +202,11 @@ class UserController {
     try {
       const users = await userServices.getAllUsers();
       
-      // Ensure users is always an array
-      const safeUsers = Array.isArray(users) ? users : [];
+      
+      //const safeUsers = Array.isArray(users) ? users : [];
   
       res.render("users.ejs", { 
-        users: safeUsers,
+        users : users ,
         message: "User Management"
       });
     } catch (error) {
@@ -266,6 +266,40 @@ class UserController {
     }
   }
 
+  static showchangepasswordForm(req, res) {
+    res.render("changePassword.ejs", { error: null });
+  }
+
+  static async changePasswordForm(req, res) {
+    try {
+     
+        const { email, currentPassword, newPassword } = req.body;
+  
+        const user = await userServices.getUserByEmail(email);
+        
+        const result = await userServices.changePassword(
+          email,
+          currentPassword,
+          newPassword
+        );
+        if (result) {
+          return res.redirect("/login");
+        } else {
+          return res.render("changePassword.ejs", {
+            error: "Incorrect email or password."
+          });
+        }
+     
+      
+    } catch (error) {
+      console.error("Error during changing password:", error);
+      return res.render("changePassword.ejs", {
+        error: "changing password failed. Please try again.",
+      });
+    }
+  
+
  
+}
 }
 module.exports = UserController;

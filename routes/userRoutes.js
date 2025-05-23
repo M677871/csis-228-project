@@ -12,6 +12,9 @@ router.post('/login',  validateUserLogin, userController.loginForm);
 router.get( '/signup', userController.showSignupForm);
 router.post('/signup', validateUser,      userController.signupForm);
 
+router.get('/change-password', userController.showchangepasswordForm);
+router.post('/change-password', validateUserChangePassword, userController.changePasswordForm);
+
 router.get('/' , userController.getUsers);
 router.get('/:id',validateUserId, userController.getUserById);
 router.get('/email/:email',validateUserEmail,userController.getUserByEmail);
