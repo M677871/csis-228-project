@@ -204,9 +204,9 @@ class UserController {
       
       
       //const safeUsers = Array.isArray(users) ? users : [];
-  
-      res.render("users.ejs", { 
-        users : users ,
+ 
+      res.render("users", { 
+        users : users,
         message: "User Management"
       });
     } catch (error) {
@@ -301,5 +301,73 @@ class UserController {
 
  
 }
+
+
+
+static async loadUserForm(req, res) {
+  try {
+    const { id } = req.params;
+    const user = await userServices.getUserById(id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    res.render('editUsers.ejs', { user, errorMessage: null });
+  } catch (error) {
+    console.error('Error in loadUserForm:', error);
+    res.status(500).send('Internal Server Error');
+  }
+}
+
+
+static async updateUser(req, res){
+  try {
+  const {id} = req.params;
+  const { email, password, userType } = req.body;
+  const currentDate = moment().format("YYYY-MM-DD");
+
+  let user = new User(id, email, password, userType, currentDate);
+  const results = await userServices.updateUser(user);
+  if (results) {
+    return res.redirect('/users');
+  } else {
+    return res.status(500).json({ message: "Failed to update user" });
+  }
+} catch (error) {
+  console.error("Error updating user:", error);
+  return res.status(500).json({ message: error.message });
+}
+
+  
+  
+}
+
+static async deleteUserr(req, res){
+  const {id} = req.params;
+  try {
+    const result = await userServices.deleteUser(id);
+    if (result) {
+      return res.redirect('/users');
+    } else {
+      return res.status(500).json({ message: "Failed to delete user" });
+    }
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return res.status(500).json({ message: error.message });
+  }
+
+}
+
+
+  static async loadUserView(req, res) {
+    try {
+      const { id } = req.params;
+      const user = await userServices.getUserById(id);
+      res.render("userView", { user: user });
+    } catch (error) {
+      console.error("Error loading user view:", error);
+      res.status(500).json({ message: error.message });
+    }
+  }
+
 }
 module.exports = UserController;

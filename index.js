@@ -162,6 +162,15 @@ app.get('/changePassword', (req, res) => {
     }
 });
 
+app.get('/editUser', (req, res) => {
+    try {
+      res.render('editUsers.ejs'); 
+    } catch (error) {
+      console.error('Error in edit user:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

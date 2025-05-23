@@ -7,6 +7,8 @@ const router = express.Router();
 
 
 router.get ('/view-users', userController.loadUsersView);
+router.get ('/view-users/:id', userController.loadUserView);
+
 router.get( '/login',  userController.showLoginForm);
 router.post('/login',  validateUserLogin, userController.loginForm);
 router.get( '/signup', userController.showSignupForm);
@@ -14,6 +16,11 @@ router.post('/signup', validateUser,      userController.signupForm);
 
 router.get('/change-password', userController.showchangepasswordForm);
 router.post('/change-password', validateUserChangePassword, userController.changePasswordForm);
+
+router.delete('/delete-user/:id', userController.deleteUserr);
+
+router.get('/edit-form/:id', userController.loadUserForm);
+router.post('/update-user/:id', userController.updateUser);
 
 router.get('/' , userController.getUsers);
 router.get('/:id',validateUserId, userController.getUserById);
