@@ -196,6 +196,28 @@ class UserController {
     }
   }
 
+
+ 
+  static async loadUsersView(req, res) {
+    try {
+      const users = await userServices.getAllUsers();
+      
+      // Ensure users is always an array
+      const safeUsers = Array.isArray(users) ? users : [];
+  
+      res.render("users.ejs", { 
+        users: safeUsers,
+        message: "User Management"
+      });
+    } catch (error) {
+      console.error("Error loading users view:", error);
+      res.render("users.ejs", {
+        errorMessage: "Failed to load users. Please try again later.",
+        users: []
+      });
+    }
+  }
+
   static showLoginForm(req, res) {
     res.render("login.ejs", { error: null });
   }
@@ -213,7 +235,7 @@ class UserController {
           return res.redirect("/instructor");
         } else if (user.userType === "student") {
           return res.redirect("/student");
-        } else res.render("home.ejs", { title: "Home" });
+        } else res.render("adminView.ejs", { title: "Home" });
       } else {
         res.render("login.ejs", { error: "Incorrect email or password." });
       }
@@ -244,9 +266,6 @@ class UserController {
     }
   }
 
-  static async loadUsersView(req, res) {
-    const users = await userServices.getAllUsers();
-    res.render("users", { users: users, message: "Welcome to LearnOnline" });
-  }
+ 
 }
 module.exports = UserController;

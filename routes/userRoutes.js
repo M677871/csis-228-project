@@ -4,11 +4,14 @@ const {validateUserId , validateUserEmail , validateUserLogin ,
 validateUser, validateUserChangePassword} = require('../validators/user.dto');
 const router = express.Router();
 
+
+
+router.get ('/view-users', userController.loadUsersView);
 router.get( '/login',  userController.showLoginForm);
 router.post('/login',  validateUserLogin, userController.loginForm);
 router.get( '/signup', userController.showSignupForm);
 router.post('/signup', validateUser,      userController.signupForm);
-router.get ('/view-users', userController.loadUsersView);
+
 router.get('/' , userController.getUsers);
 router.get('/:id',validateUserId, userController.getUserById);
 router.get('/email/:email',validateUserEmail,userController.getUserByEmail);
