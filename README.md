@@ -21,7 +21,7 @@ Ensure you have the following installed:
 │── /validators             # Request validation logic
 │── /routes                 # API route definitions
 │── /views                  # Template files            
-│   │   ├── partials/     # Reusable components
+│   ├── partials/           # Reusable components
 │── /utils                  # Helper functions
 │── .env                    # Environment variables
 │── .gitignore              # Git ignored files
@@ -38,16 +38,17 @@ Ensure you have the following installed:
     git clone https://github.com/M677871/csis-228-project.git
    
     ```
+ 2. **Change directory**
     ```sh
      cd csis-228-project
      ```
 
-2. **Install dependencies**
+3. **Install dependencies**
     ```sh
     npm install
     ```
 
-3. **Configure environment variables**
+4. **Configure environment variables**
     Create a `.env` file in the root directory and add the following:
     ```env
     PORT=3000
@@ -57,12 +58,12 @@ Ensure you have the following installed:
     DB_NAME=your-database-name
     ```
 
-4. **Run database migrations (if applicable)**
+5. **Run database migrations (if applicable)**
     ```sh
     npm run migrate
     ```
 
-5. **Start the server**
+6. **Start the server**
     ```sh
     npm start
     ```
