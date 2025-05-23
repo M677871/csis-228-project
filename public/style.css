@@ -1,0 +1,45 @@
+body {
+    background-color: #e7ecf4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .main-content {
+    flex: 1;
+  }
+  .card {
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 400px;
+  }
+  .form-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+  }
+  .form-input {
+    padding-left: 2.5rem;
+    border-radius: 0.5rem;
+  }
+  .toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+  }
+  .auth-btn {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    border-radius: 0.5rem;
+  }
+  .auth-btn:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+  }
