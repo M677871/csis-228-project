@@ -3,6 +3,8 @@ const studentController = require("../controllers/studentController");
 const {validateStudent, validateStudentId} = require("../validators/student.dto");
 const router = express.Router();
 
+
+router.get('/studentCourses/:id' , studentController.loadStudentCourses);
 router.get('/studentView', studentController.showStudentForm);
 router.get('studentView',studentController.loadStudentsView);
 

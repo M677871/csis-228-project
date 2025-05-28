@@ -140,5 +140,16 @@ static async showInstructorForm(req, res) {
         res.status(500).send('Internal Server Error');
     }
   }
+
+  static async loadInstructorCourses(req, res) {
+    try {
+        const { id } = req.params;
+        const courses = await instructorService.getInstruvtorCourses(id);
+        res.render('instructorCourses.ejs', { courses });
+    } catch (error) {
+        console.error('Error loading instructor courses:', error);
+        res.status(500).send('Internal Server Error');
+    }
+  }
 }
 module.exports = InstructorController;

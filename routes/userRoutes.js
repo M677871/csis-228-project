@@ -5,7 +5,7 @@ validateUser, validateUserChangePassword} = require('../validators/user.dto');
 const router = express.Router();
 
 
-
+router.get('/view-users', userController.loadUsersForm);
 router.get ('/view-users', userController.loadUsersViewww);
 router.get ('/view-users/:id', userController.loadUserView);
 

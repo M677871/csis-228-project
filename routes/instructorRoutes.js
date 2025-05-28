@@ -3,7 +3,7 @@ const instructorController = require('../controllers/instructorController');
 const {validateInstructor, validateInstructorId} = require('../validators/instructor.dto');
 const router = express.Router();
 
-
+router.get('/instructorCourses/:id', instructorController.loadInstructorCourses);
 router.get('/', instructorController.getAllInstructors);
 router.get('/instructorView', instructorController.showInstructorForm);
 router.get('/:id',validateInstructorId, instructorController.getInstructorById);

@@ -173,7 +173,16 @@ static async showStudentForm(req, res) {
   }
 }
 
-
+static async loadStudentCourses(req, res) {
+  try {
+      const { id } = req.params;
+      const courses = await studentService.getStudentCourses(id);
+      res.render('studentCourses.ejs', { courses });
+  } catch (error) {
+      console.error('Error loading student courses:', error);
+      res.status(500).send('Internal Server Error');
+  }
+}
 
 }
 

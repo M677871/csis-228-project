@@ -195,7 +195,10 @@ class UserController {
       return res.status(500).json({ message: error.message });
     }
   }
-
+  
+static async loadUsersForm(req , res){
+  res.render("users.ejs", { error: null });
+}
 
 
   static async loadUsersViewww(req, res) {
