@@ -88,7 +88,6 @@
 <body>
   <%- include('partials/header') %>
 
-  <!-- MAIN LOGIN CONTENT -->
   <div class="main-content d-flex align-items-center justify-content-center px-3">
     <div class="card bg-white p-4 w-100">
       <div class="text-center mb-4">
@@ -103,17 +102,33 @@
         </div>
       <% } %>
 
+      <% if (typeof validationErrors !== 'undefined' && validationErrors.length > 0) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <ul>
+            <% validationErrors.forEach(function(error) { %>
+              <li><%= error.msg %></li>
+            <% }); %>
+          </ul>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% } %>
+
       <form action="/login" method="POST" novalidate>
         <div class="mb-3 position-relative">
           <i class="bi bi-envelope-fill form-icon"></i>
           <input
             type="email"
             name="email"
-            class="form-control form-input py-2"
+            class="form-control form-input py-2 <%= typeof validationErrors !== 'undefined' && validationErrors.some(e => e.path === 'email') ? 'is-invalid' : '' %>"
             placeholder="you@example.com"
             required
             value="<%= typeof email !== 'undefined' ? email : '' %>"
           />
+          <% if (typeof validationErrors !== 'undefined' && validationErrors.some(e => e.path === 'email')) { %>
+            <div class="invalid-feedback">
+              <%= validationErrors.find(e => e.path === 'email').msg %>
+            </div>
+          <% } %>
         </div>
         <div class="mb-4 position-relative">
           <i class="bi bi-lock-fill form-icon"></i>
@@ -121,7 +136,7 @@
             id="password"
             type="password"
             name="password"
-            class="form-control form-input py-2"
+            class="form-control form-input py-2 <%= typeof validationErrors !== 'undefined' && validationErrors.some(e => e.path === 'password') ? 'is-invalid' : '' %>"
             placeholder="••••••••"
             required
             minlength="6"
@@ -129,6 +144,11 @@
           <button type="button" class="toggle-password" onclick="togglePassword('password','toggleIcon')">
             <i id="toggleIcon" class="bi bi-eye-fill"></i>
           </button>
+          <% if (typeof validationErrors !== 'undefined' && validationErrors.some(e => e.path === 'password')) { %>
+            <div class="invalid-feedback">
+              <%= validationErrors.find(e => e.path === 'password').msg %>
+            </div>
+          <% } %>
         </div>
         <button type="submit" class="btn auth-btn text-white w-100 mb-3">Sign In</button>
 

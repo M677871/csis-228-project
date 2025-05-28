@@ -9,13 +9,13 @@
 
     <ul class="nav col-12 col-md-auto mb-2 mb-md-0 justify-content-center">
       <li class="nav-item">
-        <a href="/" 
+        <a href="/"
            class="nav-link px-3 text-dark fw-medium position-relative hover-underline">
           Home
         </a>
       </li>
       <li class="nav-item">
-        <a href="/api/course/view-courses" 
+        <a href="/api/course/view-courses"
            class="nav-link px-3 text-dark fw-medium position-relative hover-underline">
           Courses
         </a>
@@ -23,14 +23,34 @@
     </ul>
 
     <div class="col-md-3 text-end">
-      <a href="/login" 
-         class="btn btn-outline-primary rounded-pill px-4 me-2 fw-medium">
-        Login
-      </a>
-      <a href="/signup" 
-         class="btn btn-primary rounded-pill px-4 fw-medium">
-        Sign Up
-      </a>
+      <% if (user) { %>
+        <div class="dropdown">
+          <a class="btn btn-outline-primary rounded-pill px-4 me-2 fw-medium dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle me-1"></i> <%= user.email %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <% if (user.userType === 'student') { %>
+              <li><a class="dropdown-item" href="/student/dashboard">Student Dashboard</a></li>
+            <% } else if (user.userType === 'instructor') { %>
+              <li><a class="dropdown-item" href="/instructor/dashboard">Instructor Dashboard</a></li>
+            <% } else if (user.userType === 'admin') { %>
+              <li><a class="dropdown-item" href="/admin/dashboard">Admin Dashboard</a></li>
+              <li><a class="dropdown-item" href="/users">Manage Users</a></li> <% } %>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/changePassword">Change Password</a></li>
+            <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+          </ul>
+        </div>
+      <% } else { %>
+        <a href="/login"
+           class="btn btn-outline-primary rounded-pill px-4 me-2 fw-medium">
+          Login
+        </a>
+        <a href="/signup"
+           class="btn btn-primary rounded-pill px-4 fw-medium">
+          Sign Up
+        </a>
+      <% } %>
     </div>
   </header>
 </div>

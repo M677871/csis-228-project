@@ -4,7 +4,7 @@ const moment = require('moment');
 
 /**
  * @class EnrollementController
- * @description This class manages the enrollement processes, 
+ * @description This class manages the enrollement processes,
  * including creating, retrieving, updating, and deleting enrollements.
  */
 
@@ -21,7 +21,7 @@ class EnrollementController {
   static async createEnrollement(req, res) {
     try {
       const { studentId, courseId, status } = req.body;
-     
+
       let enrollement = new Enrollement(
         0,
         studentId,
@@ -64,7 +64,7 @@ class EnrollementController {
   static async getEnrollementById(req, res) {
     try {
       const { id } = req.params;
-      
+
       const enrollement = await enrollementService.getEnrollementById(id);
 
       res.status(200).json(enrollement);
@@ -77,7 +77,7 @@ class EnrollementController {
    * @async
    * @description Updates an existing enrollement in the system.
    * @param {Object} req - The request object containing the enrollement ID in the params and
-   *  updated data in the body (studentId, courseId, status).
+   *  updated data in the body (studentId, courseId, status).
    * @param {Object} res - The response object.
    * @returns {Object} JSON response with the updated enrollement data.
    */
@@ -85,9 +85,9 @@ class EnrollementController {
   static async updateEnrollement(req, res) {
     try {
       const {id} = req.params;
-      
+
       const { studentId, courseId, status } = req.body;
-      
+
       let enrollement = new Enrollement(
         id,
         studentId,
@@ -115,7 +115,7 @@ class EnrollementController {
   static async deleteEnrollement(req, res) {
     try {
       const { id } = req.params;
-     
+
       await enrollementService.deleteEnrollement(id);
       return res
         .status(200)
@@ -128,35 +128,61 @@ class EnrollementController {
 
   static showEnrollementForm(req, res) {
     try {
-      
+
     res.render("createEnrollement.ejs", { error: null });
     }
     catch (error) {
       console.error("Error rendering course form:", error);
       return res.status(500).send("Internal Server Error");
     }
-  } 
+  }
 
-
+  /**
+   * @async
+   * @description Handles the creation of an enrollment from the frontend.
+   * Automatically uses studentId from session.
+   * @param {Object} req - The request object containing courseId in the body.
+   * @param {Object} res - The response object.
+   */
   static async createEnrollementForm(req, res) {
     try {
-      const { studentId, courseId, status } = req.body;
-     
+      // 1. Get studentId from session
+      const studentId = req.session.user ? req.session.user.userId : null;
+      const { courseId } = req.body;
+      const status = "enrolled"; // Default status for new enrollments
+
+      // Basic validation
+      if (!studentId) {
+        req.flash('error', 'You must be logged in as a student to enroll in a course.');
+        return res.redirect('/login'); // Redirect to login if studentId is missing
+      }
+      if (!courseId) {
+        req.flash('error', 'Course ID is missing. Cannot enroll.');
+        return res.redirect('/api/course/view-courses'); // Redirect back to courses page
+      }
+
       let enrollement = new Enrollement(
-        0,
+        0, // Assuming 0 or null for auto-incremented ID
         studentId,
         courseId,
         status,
         moment().format("YYYY-MM-DD")
       );
+
       const result = await enrollementService.createEnrollement(enrollement);
-      
-      return res.redirect("/student");
+
+      if (result) {
+        req.flash('success', 'Successfully enrolled in the course!');
+        return res.redirect("/student/dashboard"); // Redirect to student dashboard
+      } else {
+        req.flash('error', 'Enrollment failed. This might be a duplicate enrollment or an issue with the course/student data.');
+        return res.redirect("/api/course/view-courses"); // Redirect back to courses page
+      }
+
     } catch (error) {
-      console.error("Error during Enrolement creation:", error);
-      return res.render("createEnrollement.ejs", {
-        error: "Enrollement creation failed. Please try again.",
-      });
+      console.error("Error during Enrollment creation:", error);
+      req.flash('error', 'An unexpected error occurred during enrollment. Please try again.');
+      return res.redirect("/api/course/view-courses"); // Redirect back to courses page
     }
   }
 }

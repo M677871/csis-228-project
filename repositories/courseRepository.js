@@ -6,17 +6,17 @@ const moment = require("moment");
 
 /**
  * The `CourseRepository` class provides a set of static methods
- *  to interact with the `courses` table in the database.
- * It includes operations such as creating, updating, deleting, retrieving, 
+ * to interact with the `courses` table in the database.
+ * It includes operations such as creating, updating, deleting, retrieving,
  * and checking for courses, as well as retrieving associated instructors and students.
- * 
+ *
  * @class
  */
-
 class CourseRepository {
+
   /**
    * Create a new course.
-   * 
+   *
    * @param {Object} course - The course object containing course details.
    * @returns {number} - The number of affected rows, indicating the success of the operation.
    * @throws {Error} - Throws an error if the course creation fails.
@@ -31,7 +31,6 @@ class CourseRepository {
         course.description,
         course.createAt
       ]);
-
       return affectedRows;
     } catch (error) {
       throw new Error("Error creating course: " + error.message);
@@ -40,7 +39,7 @@ class CourseRepository {
 
   /**
    * Get course details by ID.
-   * 
+   *
    * @param {number} courseId - The ID of the course to fetch.
    * @returns {Course} - The course object populated with the course details.
    * @throws {Error} - Throws an error if fetching the course fails.
@@ -57,7 +56,7 @@ class CourseRepository {
 
   /**
    * Get all courses.
-   * 
+   *
    * @returns {Course[]} - An array of all course objects.
    * @throws {Error} - Throws an error if fetching the courses fails.
    */
@@ -71,9 +70,9 @@ class CourseRepository {
     }
   }
 
-    /**
+  /**
    * Update the information of a course.
-   * 
+   *
    * @param {Object} course - The course object containing the updated course details.
    * @returns {number} - The number of affected rows, indicating the success of the operation.
    * @throws {Error} - Throws an error if updating the course fails.
@@ -95,9 +94,9 @@ class CourseRepository {
     }
   }
 
- /**
+  /**
    * Delete a course by ID.
-   * 
+   *
    * @param {number} courseId - The ID of the course to delete.
    * @returns {boolean} - Returns true if the course was deleted, false otherwise.
    * @throws {Error} - Throws an error if deleting the course fails.
@@ -112,56 +111,49 @@ class CourseRepository {
     }
   }
 
-
-   /**
+  /**
    * Get all students enrolled in a course.
-   * 
+   *
    * @param {number} courseId - The ID of the course to get students for.
    * @returns {Student[]|null} - An array of students enrolled in the course, or null if no students are found.
    * @throws {Error} - Throws an error if fetching students fails.
    */
-
-  static async getStudentOfTheCourse(courseId){
-    try{
-    const query = `select * from students where studend_id IN (select student_id from enrollments where course_id =?)`
-    const rows = await db.query(query ,[courseId]);
-    return rows.length > 0 ? rows.map(Student.fromRow) : null;
-    }catch(e){
+  static async getStudentOfTheCourse(courseId) {
+    try {
+      const query = `SELECT * FROM students WHERE student_id IN (SELECT student_id FROM enrollments WHERE course_id = ?)`;
+      const rows = await db.query(query, [courseId]);
+      return rows.length > 0 ? rows.map(Student.fromRow) : null;
+    } catch (e) {
       console.log(e);
       throw new Error(e);
     }
-
   }
 
   /**
    * Get instructor details by course ID.
-   * 
+   *
    * @param {number} courseId - The ID of the course to get instructor details for.
    * @returns {Instructor[]} - An array of instructor objects associated with the course.
    * @throws {Error} - Throws an error if fetching instructor details fails.
    */
-
-
   static async getInstructorByCourseId(courseId) {
     try {
       const query = `SELECT * FROM instructors
                      WHERE instructor_id IN (SELECT instructor_id FROM courses WHERE course_id = ?)`;
       const rows = await db.query(query, [courseId]);
-      return rows.map(Instructor.fromRow) ;
+      return rows.map(Instructor.fromRow);
     } catch (error) {
       throw new Error("Error fetching instructor by course ID: " + error.message);
     }
   }
 
-   /**
+  /**
    * Check if a course exists by ID.
-   * 
+   *
    * @param {number} courseId - The ID of the course to check.
    * @returns {boolean} - Returns true if the course exists, false otherwise.
    * @throws {Error} - Throws an error if checking the course existence fails.
    */
-
-
   static async courseExistsById(courseId) {
     try {
       const query = "SELECT * FROM courses WHERE course_id = ?";
@@ -169,6 +161,77 @@ class CourseRepository {
       return rows.length > 0 ? true : false;
     } catch (error) {
       throw new Error("Error checking if course exists: " + error.message);
+    }
+  }
+
+  static async getTotalCourses() {
+    try {
+      const query = "SELECT COUNT(*) as total FROM courses";
+      const rows = await db.query(query);
+      return rows[0].total;
+    } catch (error) {
+      throw new Error("Error fetching total courses: " + error.message);
+    }
+  }
+
+  static async getStudentEnrolledCourses(studentId) {
+    try {
+      // Corrected query to join with instructors and users to get instructor's name and email
+      const query = `
+        SELECT 
+            c.course_id, 
+            c.course_name, 
+            c.description, 
+            c.create_at AS createdDate, 
+            c.image,
+            ins.ins_fname AS instructorFName,
+            ins.ins_lname AS instructorLName,
+            u.email AS instructorEmail
+        FROM courses c
+        JOIN enrollments e ON c.course_id = e.course_id
+        JOIN instructors ins ON c.instructor_id = ins.instructor_id
+        JOIN users u ON ins.user_id = u.user_id
+        WHERE e.student_id = ?;
+      `;
+      const rows = await db.query(query, [studentId]);
+      // Map to a more suitable format for the frontend, including instructor details
+      return rows.map(row => ({
+        courseId: row.course_id,
+        courseName: row.course_name,
+        description: row.description,
+        createdDate: row.createdDate,
+        image: row.image,
+        instructorName: `${row.instructorFName} ${row.instructorLName}`,
+        instructorEmail: row.instructorEmail
+      }));
+    } catch (error) {
+      throw new Error("Error fetching enrolled courses for student from repository: " + error.message);
+    }
+  }
+
+  /**
+   * @async
+   * @description Retrieves all courses taught by a specific instructor.
+   * @param {number} instructorId - The ID of the instructor (which is the user_id for the instructor).
+   * @returns {Promise<Array>} A promise that resolves to an array of course objects.
+   * @throws {Error} Throws an error if there's an issue fetching the courses.
+   */
+  static async getCoursesByInstructorId(instructorId) {
+    try {
+      // Assuming your 'courses' table has an 'instructor_id' column
+      // and your 'instructors' table has 'instructor_id' (PK) and 'user_id' (FK)
+      // We need to join with the 'instructors' table to link the user_id (from session)
+      // to the instructor_id in the courses table.
+      const query = `
+        SELECT c.*
+        FROM courses c
+        JOIN instructors i ON c.instructor_id = i.instructor_id
+        WHERE i.user_id = ?; -- Join instructors table to filter by user_id from session
+      `;
+      const rows = await db.query(query, [instructorId]);
+      return rows.map(Course.fromRow); // Map raw rows to Course objects
+    } catch (error) {
+      throw new Error("Error fetching courses by instructor ID from repository: " + error.message);
     }
   }
 }
