@@ -6,6 +6,8 @@ require("dotenv").config();
 const port = process.env.PORT;
 const app = express();
 const bodyParser = require("body-parser");
+const session = require('express-session');
+const methodOverride = require('method-override');
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require('./routes/userRoutes');
@@ -32,6 +34,18 @@ app.use(cors());
 //app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride('_method'));
+
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'a_very_secret_key_for_your_session', 
+    resave: false, 
+    saveUninitialized: false, 
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', 
+        maxAge: 1000 * 60 * 60 * 24 
+    }
+}));
 
 app.use('/' , authRoutes);
 app.use('/api/users',userRoutes);
