@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><%= typeof title !== 'undefined' ? title : 'Create New Course — LearnOnline' %></title>
+    <title><%= typeof title !== 'undefined' ? title : 'Add Course Material — LearnOnline' %></title>
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -21,29 +21,29 @@
         }
 
         body {
-            background-color: #f8fafc; /* Lighter background */
+            background-color: #f8fafc;
             min-height: 100vh;
             font-family: "Segoe UI", system-ui, sans-serif;
         }
 
         .card {
-            border-radius: 1.25rem; /* More rounded corners */
+            border-radius: 1.25rem;
             border: none;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-            max-width: 600px; /* Increased max-width for better form layout */
-            margin: auto; /* Center the card */
-            background: linear-gradient(145deg, #ffffff, #f8fafc); /* Subtle gradient */
+            max-width: 600px;
+            margin: auto;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
         }
 
         .form-control, .form-select {
-            border-radius: 0.75rem; /* Rounded input fields */
+            border-radius: 0.75rem;
             padding: 1rem 1.5rem;
             border: 2px solid #e2e8f0;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .form-control:focus, .form-select:focus {
-            border-color: var(--primary-color); /* Primary color on focus */
+            border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
@@ -70,7 +70,7 @@
         }
 
         h2 {
-            color: var(--primary-color); /* Primary color for headings */
+            color: var(--primary-color);
             font-weight: 700;
         }
         p.text-secondary {
@@ -84,8 +84,8 @@
     <div class="d-flex align-items-center justify-content-center py-5 px-3">
         <div class="card bg-white p-4 w-100">
             <div class="text-center mb-4">
-                <h2 class="mb-1">📚 Create New Course</h2>
-                <p class="text-secondary">Share your knowledge with the world</p>
+                <h2 class="mb-1">📚 Add Material to "<%= course.courseName %>"</h2>
+                <p class="text-secondary">Upload videos, documents, or links for your course</p>
             </div>
 
             <% if (typeof error !== 'undefined' && error) { %>
@@ -103,50 +103,54 @@
                 </div>
             <% } %>
 
-            <form action="/instructor/courses" method="POST">
+            <form action="/instructor/courses/<%= course.courseId %>/materials" method="POST">
+                <input type="hidden" name="courseId" value="<%= course.courseId %>" />
+
                 <div class="mb-3">
-                    <label for="courseName" class="form-label">Course Name</label>
+                    <label for="title" class="form-label">Material Title</label>
                     <input
                         type="text"
-                        name="courseName"
+                        name="title"
                         class="form-control"
-                        id="courseName"
-                        placeholder="e.g., Introduction to Web Development"
+                        id="title"
+                        placeholder="e.g., Introduction to HTML, Chapter 1 Notes"
                         required
-                        value="<%= typeof course !== 'undefined' && course ? course.courseName : '' %>"
                     />
                 </div>
 
                 <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea
-                        name="description"
-                        class="form-control"
-                        id="description"
-                        rows="5"
-                        placeholder="Provide a detailed description of your course..."
-                        required
-                    ><%= typeof course !== 'undefined' && course ? course.description : '' %></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label for="categorieId" class="form-label">Category</label>
-                    <select name="categorieId" id="categorieId" class="form-select" required>
-                        <option value="">Select a Category</option>
-                        <% if (typeof categories !== 'undefined' && categories.length > 0) { %>
-                            <% categories.forEach(category => { %>
-                                <option value="<%= category.categoryId %>"
-                                        <%= (typeof course !== 'undefined' && course && course.categorieId == category.categoryId) ? 'selected' : '' %>>
-                                    <%= category.categoryName %>
-                                </option>
+                    <label for="materialType" class="form-label">Material Type</label>
+                    <select name="materialType" id="materialType" class="form-select" required>
+                        <option value="">Select Material Type</option>
+                        <% if (typeof materialTypes !== 'undefined' && materialTypes.length > 0) { %>
+                            <% materialTypes.forEach(type => { %>
+                                <option value="<%= type %>"><%= type.charAt(0).toUpperCase() + type.slice(1) %></option>
                             <% }); %>
+                        <% } else { %>
+                            <option value="video">Video</option>
+                            <option value="document">Document</option>
+                            <option value="link">Link</option>
+                            <option value="pdf">PDF</option>
+                            <option value="image">Image</option>
                         <% } %>
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label for="filePath" class="form-label">File Path / URL</label>
+                    <input
+                        type="text"
+                        name="filePath"
+                        class="form-control"
+                        id="filePath"
+                        placeholder="e.g., /uploads/my-video.mp4 or https://youtube.com/watch?v=xyz"
+                        required
+                    />
+                </div>
+
                 <button type="submit" class="btn auth-btn w-100">
-                    <i class="bi bi-folder-plus me-2"></i>
-                    Create Course
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Add Material
                 </button>
             </form>
         </div>

@@ -1,4 +1,5 @@
 const courseRepository = require('../repositories/courseRepository');
+const Course = require('../models/courseModel');
 const instructorRepository = require('../repositories/instructorRepository');
 const categoryRepository = require('../repositories/categoryRepository');
 
@@ -32,6 +33,7 @@ class CourseService {
    * @returns {Promise<Object>} A promise that resolves to a course object.
    * @throws {Error} Throws an error if the course ID does not exist or if there's an issue fetching the course.
    */
+  /*
   static async getCourseById(id) {
     try {
       if (!(await courseRepository.courseExistsById(id))) {
@@ -43,7 +45,7 @@ class CourseService {
       throw new Error('Error fetching course: ' + error.message);
     }
   }
-
+*/
   /**
    * Retrieves the instructor associated with a specific course.
    *
@@ -149,23 +151,22 @@ class CourseService {
     }
   }
 
-  /**
-   * @async
-   * @description Retrieves all courses taught by a specific instructor.
-   * @param {number} instructorId - The ID of the instructor.
-   * @returns {Promise<Array>} A promise that resolves to an array of course objects.
-   * @throws {Error} Throws an error if there's an issue fetching the courses.
-   */
-  static async getCoursesByInstructorId(instructorId) {
+// Inside services/courseService.js
+
+/**
+ * Gets all courses taught by a specific instructor.
+ * This function calls the CourseRepository to retrieve the data.
+ * @param {number} instructorId - The ID of the instructor.
+ * @returns {Promise<Course[]>} An array of Course objects.
+ * @throws {Error} If fetching courses fails.
+ */
+static async getCoursesByInstructorId(instructorId) {
     try {
-      // You'll need to implement this method in your courseRepository.js as well.
-      // It should query your database to find courses where the instructor_id matches.
-      const courses = await courseRepository.getCoursesByInstructorId(instructorId);
-      return courses;
+        return await courseRepository.getCoursesByInstructorId(instructorId);
     } catch (error) {
-      throw new Error('Error fetching courses by instructor ID: ' + error.message);
+        throw new Error("Error fetching courses by instructor from service: " + error.message);
     }
-  }
+}
 
   /**
    * @async
@@ -199,6 +200,16 @@ class CourseService {
       throw new Error('Error fetching total course count: ' + error.message);
     }
   }
+
+    static async getCourseById(courseId) {
+    
+
+        const courseData = await courseRepository.getCourseById(courseId); // Pass the already-numeric ID
+        if (!courseData) {
+            throw new Error(`Course ID: ${courseId} does not exist`); // Use the numeric ID in error message
+        }
+        return courseData 
+    }
 }
 
 module.exports = CourseService;

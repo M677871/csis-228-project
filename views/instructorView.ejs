@@ -176,7 +176,7 @@
     <div class="container py-5">
       <div class="row mb-4 g-4 action-buttons">
         <div class="col-md-4">
-          <a href="/createCourse" class="btn auth-btn text-white">
+          <a href="/instructor/courses/new" class="btn auth-btn text-white">
             <i class="bi bi-file-earmark-plus fs-5"></i>
             Create Course
           </a>
@@ -240,16 +240,16 @@
             <% courses.forEach(course => { %>
               <div class="col">
                 <div class="card course-card h-100">
-                  <img src="<%= course.image || '/images/default.png' %>" class="card-img-top course-card-img" alt="<%= course.course_name %>">
+                  <img src="/images/default.png" class="card-img-top course-card-img" alt="<%= course.courseName %>">
                   <div class="card-body course-card-body">
-                    <h5 class="course-title"><%= course.course_name %></h5>
+                    <h5 class="course-title"><%= course.courseName %></h5>
                     <p class="course-description"><%= course.description.substring(0, 150) %>...</p>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <span class="course-meta">
-                            <i class="bi bi-calendar-event"></i> Created: <%= course.createdDate ? new Date(course.createdDate).toLocaleDateString() : 'N/A' %>
+                            <i class="bi bi-calendar-event"></i> Created: <%= course.createAt ? new Date(course.createAt).toLocaleDateString() : 'N/A' %>
                         </span>
-                        <a href="/api/course/edit-form/<%= course.courseId %>" class="btn btn-sm btn-outline-primary">Edit Course</a>
-                    </div>
+                        <a href="/api/courses/<%= course.courseId %>/materials" class="btn btn-sm btn-outline-primary">View Materials</a>
+                        </div>
                   </div>
                 </div>
               </div>

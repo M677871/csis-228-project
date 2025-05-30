@@ -121,5 +121,18 @@ class CourseMaterialService {
         throw new Error('Error deleting course material: ' + error.message);
     }
 }
+
+static async getMaterialsByCourseId(courseId) {
+    try {
+      if (!(await courseRepository.courseExistsById(courseId))) {
+        throw new Error(`Course ID: ${courseId} does not exist`);
+      }
+      const courseMaterials = await courseMaterialRepository.getCourseMaterialByCourseId(courseId);
+      return courseMaterials; 
+
+    }catch (error) {
+      throw new Error('Error fetching course materials by course ID: ' + error.message);
+    }
+  }
 }
 module.exports = CourseMaterialService;

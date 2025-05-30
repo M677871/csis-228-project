@@ -1,24 +1,29 @@
 const express = require('express');
-const { InstructorController, requireInstructorLogin } = require('../controllers/instructorController'); // Import both controller and middleware
+const { InstructorController, requireInstructorLogin } = require('../controllers/instructorController');
 const { validateInstructor, validateInstructorId } = require('../validators/instructor.dto');
 const router = express.Router();
 
-// Frontend route for the instructor dashboard
-// This route is protected by the requireInstructorLogin middleware
+// Instructor Dashboard
 router.get('/dashboard', requireInstructorLogin, InstructorController.getInstructorDashboard);
 
-// API routes (these are generally for data fetching/manipulation, not direct view rendering)
-router.get('/', InstructorController.getAllInstructors); // Get all instructors (might be for admin API)
-router.get('/:id', validateInstructorId, InstructorController.getInstructorById); // Get instructor by ID (API)
-router.get('/courses/:id', validateInstructorId, InstructorController.getInstructorCourses); // Get courses by instructor ID (API)
-router.post('/', validateInstructor, InstructorController.createInstructor); // Create instructor (API)
-router.put('/:id', validateInstructorId, validateInstructor, InstructorController.updateInstructor); // Update instructor (API)
-router.delete('/:id', validateInstructorId, InstructorController.deleteInstructor); // Delete instructor (API)
+// Course Creation Forms
+router.get('/courses/new', requireInstructorLogin, InstructorController.showCreateCourseForm);
+router.post('/courses', requireInstructorLogin, InstructorController.createCourse);
 
-// --- REMOVED/REPLACED ROUTES ---
-// The following routes are now handled by the /dashboard route or are API-only:
-// router.get('/instructorCourses/:id', instructorController.loadInstructorCourses); // Replaced by getInstructorDashboard
-// router.get('/instructorView', instructorController.showInstructorForm); // Replaced by getInstructorDashboard
+// Add Material Form (Display)
+router.get('/courses/:courseId/materials/new', requireInstructorLogin, InstructorController.showAddMaterialForm);
+
+// Handle Add Material Submission (POST) - This is where the form from addCourseMaterial.ejs submits
+// It calls InstructorController.addMaterial
+router.post('/courses/:courseId/materials', requireInstructorLogin, InstructorController.addMaterial); // ADDED THIS ROUTE
+
+// Existing API routes for general instructor management (keep these)
+router.get('/', InstructorController.getAllInstructors);
+router.get('/:id', validateInstructorId, InstructorController.getInstructorById);
+router.get('/courses/:id', validateInstructorId, InstructorController.getInstructorCourses);
+router.post('/', validateInstructor, InstructorController.createInstructor);
+router.put('/:id', validateInstructorId, validateInstructor, InstructorController.updateInstructor);
+router.delete('/:id', validateInstructorId, InstructorController.deleteInstructor);
 
 
 module.exports = router;
