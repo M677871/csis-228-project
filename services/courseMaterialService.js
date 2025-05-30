@@ -64,12 +64,12 @@ class CourseMaterialService {
       throw new Error(`Course ID: ${courseMaterial.courseId} does not exist`);
     }
 
-   
+   /*
     if (await courseMaterialRepository.courseMaterialExistsByCourseId(courseMaterial.courseId)) {
       throw new Error(`Course ID: ${courseMaterial.courseId} already has material`);
     }
 
- 
+ */
     const newCourseMaterial = await courseMaterialRepository.createCourseMaterial(courseMaterial);
     return newCourseMaterial;
   } catch (error) {
