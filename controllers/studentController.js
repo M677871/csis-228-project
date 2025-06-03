@@ -29,6 +29,15 @@ class StudentController {
     }
   }
 
+  /**
+   * @async
+   * @description Fetches a student by their ID.
+   *  
+   * @param {Object} req - The request object containing the student ID in params.
+   * @param {Object} res - The response object.
+   * @return {Promise<void>} - Returns a JSON response with the student data or an error message.
+   * */
+  
   static async getStudentById(req, res) {
     try {
       const { id } = req.params;
@@ -38,6 +47,8 @@ class StudentController {
       return res.status(500).json({ message: error.message });
     }
   }
+
+
 
   static async createStudent(req, res) {
     try {
